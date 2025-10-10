@@ -1,0 +1,12 @@
+[
+  {
+    "source": "/Feelity",
+    "destination": "/?data=Feelity",
+    "permanent": true
+  },
+  {
+    "source": "/Autre",
+    "destination": "/?data=Autre",
+    "permanent": true
+  }
+]

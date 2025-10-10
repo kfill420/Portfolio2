@@ -1,0 +1,22 @@
+@use '../../styles/variables.scss' as *;
+
+.projects2 {
+  height: 100vh;
+}
+
+.description-overlay {
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 800px;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}

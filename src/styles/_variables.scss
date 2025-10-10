@@ -1,0 +1,55 @@
+@use 'sass:map';
+
+//Background color
+$bgColor-White: #fff;
+$bgColor-primary: #15243F;
+$bgColor-dark: #090979;
+$bgColor-dark2: #008740;
+$bgColor-light: #3225FF;
+$bgColor-dark-withAlpha: RGBA(40, 44, 52, 0.2);
+$btnBg-landing: #5bc8e6;
+$bgColor-lightGrey: #f0f0f0;
+$bgColor-darkGey: #232323;
+$bgColor-darkGey2: #151515;
+$bgColor-Green: #a7ff94;
+
+
+// text color
+$textColor-colorWhite: #f5f5dc;
+$textColor-colorDark: #272020;
+
+// svg color
+$color1: #00B9FF;
+$color2: #00FF78;
+$color3: #1F1F1F;
+$color4: #09022A;
+$color5: grey;
+$color6: white;
+
+// Fonts
+@font-face {
+    font-family: 'Orbitron';
+    src: url('/fonts/Orbitron-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+$breakpoints: (
+    mobile: '(max-width: 430px)',
+    tablet: '(min-width:431px) and (max-width: 1023px)',
+    tablet_mini: '(min-width:431px)',
+    tablet_xs: '(min-width:432px) and (max-width: 724px)',
+    tablet_xl: '(min-width:725px) and (max-width: 1023px)',
+    desktop: '(min-width: 1024px)',
+    tablet_desktop: '(min-width:431px)',
+    desktop_xs: '(min-width:1024px) and (max-width: 1444px)',
+    desktop_xl: '(min-width:1445px)',
+    landscape: '(max-width: 767px) and (orientation: landscape)',
+);
+
+@mixin media($device) {
+    @media only screen and #{map.get($breakpoints, $device)} {
+        @content;
+    }
+}
