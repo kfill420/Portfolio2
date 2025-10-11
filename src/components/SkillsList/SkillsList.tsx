@@ -2,7 +2,7 @@ import './SkillsList.scss';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Environment, Image, useTexture, Html } from '@react-three/drei';
+import { Image, useTexture, Html, Environment } from '@react-three/drei';
 
 const frontendIcons = [
   { url: '/icons/iconsTechno/React.png', label: 'React' },
@@ -63,6 +63,7 @@ const descriptions: { [key: string]: string } = {
 };
 
 interface SkillsListProps {
+  activeScene: number;
   position?: [number, number, number];
   device: 'mobile' | 'tablet' | 'desktop';
   selectedTech: string | null;
@@ -73,6 +74,7 @@ interface SkillsListProps {
 }
 
 export default function SkillsList({
+  activeScene,
   position = [0, 0, 0],
   device,
   selectedTech,
@@ -84,8 +86,14 @@ export default function SkillsList({
 
   return (
     <group position={position}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} />
+      {
+        activeScene === 2 && (
+          <>
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[5, 5, 5]} />
+            <Environment preset="night" background blur={0.5} />
+          </>
+        )}
 
       <group position={device === 'desktop' ? [-3.5, 1.5, 0] : [0, 3, 0]}>
         <SphereTitle text="Frontend" />
@@ -101,8 +109,6 @@ export default function SkillsList({
         <SphereTitle text="Gestion" />
         <IconSphere icons={gestionIcons} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
       </group>
-
-      <Environment preset="apartment" background blur={0.5} />
 
       {selectedTech && (
         <Html center>

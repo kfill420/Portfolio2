@@ -3,34 +3,42 @@ import * as THREE from 'three';
 import React, { useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import type { ThreeEvent } from '@react-three/fiber';
-import { Image, Environment, ScrollControls, useScroll, useTexture } from '@react-three/drei';
+import { Environment, Image, ScrollControls, useScroll, useTexture } from '@react-three/drei';
 import { easing } from 'maath';
 import './utils.ts';
 import { BentPlaneGeometry, MeshSineMaterial } from "./utils.ts";
 
 
 interface ProjectsListProps {
+  activeScene: number;
   position?: [number, number, number];
   setFocusIndex: (index: number) => void;
 }
 
-export default function ProjectsList({ position = [0, 0, 0], setFocusIndex }: ProjectsListProps) {
+export default function ProjectsList({ activeScene, position = [0, 0, 0], setFocusIndex }: ProjectsListProps) {
+
   return (
     <group position={position}>
       <fog attach="fog" args={['#a79', 9.5, 12]} />
-      <ScrollControls pages={4} infinite>
-        <Rig rotation={[0, 0, 0.15]}>
-          <Carousel setFocusIndex={setFocusIndex} />
-        </Rig>
-        <Banner position={[0, -0.15, 0]} />
-      </ScrollControls>
-      <Environment preset="apartment" background blur={0.5} />
+      {
+        activeScene === 1 && (
+          <ScrollControls pages={4} infinite>
+            <Rig rotation={[0, 0, 0.15]}>
+              <Carousel setFocusIndex={setFocusIndex} />
+            </Rig>
+            <Banner position={[0, -0.15, 0]} />
+          </ScrollControls>
+        )
+      }
+
+      {activeScene == 1 && <Environment preset="night" background blur={0.5} />}
     </group>
   );
 }
 
 type RigProps = React.JSX.IntrinsicElements['group'];
-function Rig(props: RigProps) {
+export function Rig(props: RigProps) {
+
   const ref = useRef<THREE.Group>(null);
   const scroll = useScroll()
   useFrame((state, delta) => {
@@ -38,13 +46,13 @@ function Rig(props: RigProps) {
     ref.current.rotation.y = -scroll.offset * (Math.PI * 2);
     if (state.events?.update)
       state.events.update()
-    easing.damp3(state.camera.position, [-state.pointer.x * 2, state.pointer.y + 1.5, 10], 0.3, delta)
+    easing.damp3(state.camera.position, [-state.pointer.x * 1, state.pointer.y + 1.5, 10], 0.3, delta)
     state.camera.lookAt(0, 0, 0)
   })
   return <group ref={ref} {...props} />
 }
 
-function Carousel({ radius = 1.2, count = 6, setFocusIndex }: { radius?: number; count?: number; setFocusIndex: (index: number) => void }) {
+export function Carousel({ radius = 1.2, count = 6, setFocusIndex }: { radius?: number; count?: number; setFocusIndex: (index: number) => void }) {
   const links = ["https://spiecraft.vercel.app",
     "https://kfill420.github.io/Github-Searcher",
     "https://kfill420.github.io/Todolist",
@@ -153,7 +161,7 @@ const Card = React.forwardRef<THREE.Group, CardProps>(({ projectUrl, url, ...pro
 
 type BannerProps = React.JSX.IntrinsicElements['mesh'];
 
-function Banner(props: BannerProps) {
+export function Banner(props: BannerProps) {
   const ref = useRef<THREE.Mesh>(null);
   const texture = useTexture('images/bannerCarousel.png');
   const scroll = useScroll();

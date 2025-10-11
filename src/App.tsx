@@ -5,7 +5,7 @@
 // import './Apps.scss';
 // import store from './store';
 
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { useEffect, useState } from "react";
 import { Routes, useLocation, useNavigate } from "react-router-dom";
 import ProjectsListUI from "./components/ProjectsList/ProjectsListUI";
@@ -17,10 +17,12 @@ import { RedirectWithParam } from "./utils/redirectWithParam";
 import { BrowserRouter as Router, Route, Navigate } from 'react-router-dom';
 import redirections from "./data/redirections.json";
 import SkillsListUI from "./components/SkillsList/SkillsListUI";
+import * as THREE from "three";
+import Navigat from "./components/subComponents/Navigator/Navigator";
 // import { Test } from './components/Test';
 
 function Home() {
-  const [sceneIndex, setSceneIndex] = useState(0);
+  const [sceneIndex, setSceneIndex] = useState(2); // 0: Presentation, 1: ProjectsList, 2: SkillsList
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
@@ -52,7 +54,10 @@ function Home() {
 
   return (
     <div style={{ overflow: "hidden", height: "100vh", width: "100vw" }}>
-      <Canvas camera={{ position: [0, 0, 100], fov: 15 }}>
+
+      <Navigat sceneIndex={sceneIndex} setSceneIndex={setSceneIndex} />
+
+      <Canvas shadows dpr={[1, 1.5]}>
         <SceneManager
           activeScene={sceneIndex}
           device={device}
@@ -64,7 +69,6 @@ function Home() {
           setFocusIndex={setFocusIndex}
         />
       </Canvas>
-
 
       {
         sceneIndex === 1 &&
@@ -88,6 +92,17 @@ function Home() {
     </div>
   )
 }
+
+export function BackgroundColor({ color }: { color: THREE.ColorRepresentation }) {
+  const { scene } = useThree();
+
+  useEffect(() => {
+    scene.background = new THREE.Color(color);
+  }, [color]);
+
+  return null;
+}
+
 
 export default function App() {
 

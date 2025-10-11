@@ -1,6 +1,8 @@
-import { useSpring, animated } from "@react-spring/three";
+import { animated } from "@react-spring/three";
 import ProjectsList from "../../ProjectsList/ProjectsList";
 import SkillsList from "../../SkillsList/SkillsList";
+import Presentation from "../../Presentation/Presentation";
+import { useSceneTransition } from "../../../hooks/useSceneTransition.ts";
 
 interface SceneManagerProps {
   activeScene: number;
@@ -14,24 +16,14 @@ interface SceneManagerProps {
 }
 
 export function SceneManager({ activeScene, device, selectedTech, setSelectedTech, organizedView, radius, speed, setFocusIndex }: SceneManagerProps) {
+  const { position } = useSceneTransition(activeScene);
 
-  const spring = useSpring({
-    position: [
-      activeScene === 0 ? 0 : activeScene === 1 ? 10 : 20,
-      0,
-      5,
-    ],
-    config: { mass: 1, tension: 170, friction: 26 },
-  });
-
-  const animatedPosition = spring.position.to((xyz) => xyz as unknown as [number, number, number]);
 
   return (
-    <animated.group position={animatedPosition}>
-
-      <SkillsList position={[3, -2.8, -18]} device={device} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
-      <ProjectsList position={[0, 0, 0]} setFocusIndex={setFocusIndex} />
-      {/* <Projects4 /> */}
+    <animated.group position={position.to((x, y, z) => [x, y, z])}>
+      <SkillsList activeScene={activeScene} position={[40, 0, 0]} device={device} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
+      <ProjectsList activeScene={activeScene} position={[20, 1, 7]} setFocusIndex={setFocusIndex} />
+      <Presentation activeScene={activeScene} position={[0, 0, 0]} />
     </animated.group>
   );
 }

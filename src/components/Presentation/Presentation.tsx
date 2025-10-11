@@ -1,116 +1,56 @@
 import './Presentation.scss';
 import * as THREE from 'three'
-import React, { useMemo, useContext, createContext, useRef, useState, useEffect } from 'react'
-import type { ReactNode } from 'react'
-import { useFrame, Canvas, useThree } from '@react-three/fiber'
+import React, { useMemo, useRef, useState, useEffect, forwardRef } from 'react'
+import type { FC, ReactNode, Ref } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
 import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing';
 import { easing } from 'maath';
 import { useGLTF, Merged, RenderTexture, PerspectiveCamera, Text, MeshReflectorMaterial, BakeShadows } from '@react-three/drei'
 import { SpinningBox } from './SpinningBox.tsx'
 import './utils.ts';
-// import type { JSX } from "react/jsx-runtime";
-type GroupProps = React.JSX.IntrinsicElements['group'];
+import type { JSX } from "react/jsx-runtime";
+import { InstancesContext, type GLTFNodes, type InstancedComponents, type ObjectProps } from './InstancesContext'; // adapte le chemin si besoin
+import { useInstances } from './useInstanecs';
+type GroupProps = JSX.IntrinsicElements['group'];
 
 
-interface InstancesProps extends Partial<React.JSX.IntrinsicElements['instancedMesh']> {
+interface InstancesProps {
   children?: React.ReactNode;
-}
-
-export interface GLTFNodes {
-  Object_4: THREE.Mesh;
-  Object_16: THREE.Mesh;
-  Object_18: THREE.Mesh;
-  Object_24: THREE.Mesh;
-  Object_52: THREE.Mesh;
-  Object_140: THREE.Mesh;
-  Object_142: THREE.Mesh;
-  Object_144: THREE.Mesh;
-  Object_146: THREE.Mesh;
-
-  Object_148: THREE.Mesh;
-  Object_150: THREE.Mesh;
-  Object_152: THREE.Mesh;
-  Object_154: THREE.Mesh;
-  Object_156: THREE.Mesh;
-  Object_158: THREE.Mesh;
-  Object_160: THREE.Mesh;
-  Object_162: THREE.Mesh;
-  Object_164: THREE.Mesh;
-  Object_166: THREE.Mesh;
-  Object_168: THREE.Mesh;
-  Object_170: THREE.Mesh;
-
-  Object_176: THREE.Mesh;
-  Object_180: THREE.Mesh;
-  Object_182: THREE.Mesh;
-  Object_184: THREE.Mesh;
-  Object_186: THREE.Mesh;
-  Object_188: THREE.Mesh;
-  Object_190: THREE.Mesh;
-  Object_192: THREE.Mesh;
-  Object_194: THREE.Mesh;
-  Object_200: THREE.Mesh;
-  Object_204: THREE.Mesh;
-
-  Object_172: THREE.Mesh;
-  Object_174: THREE.Mesh;
-  Object_22: THREE.Mesh;
-  Object_26: THREE.Mesh;
-  Object_178: THREE.Mesh;
-  Object_28: THREE.Mesh;
-  Object_206: THREE.Mesh;
-  Object_207: THREE.Mesh;
-  Object_215: THREE.Mesh;
-  Object_216: THREE.Mesh;
-  Sphere: THREE.Mesh;
+  castShadow?: boolean;
+  receiveShadow?: boolean;
 }
 
 export interface GLTFMaterials {
   Texture: THREE.Material;
 }
 
-export interface ObjectProps {
-  position: [number, number, number];
-  rotation: [number, number, number];
-  scale?: number | [number, number, number];
+export interface ForceMergedProps {
+  meshes: Record<string, THREE.Mesh>;
+  children: (instances: FC<ObjectProps> & Record<string, FC<ObjectProps>>) => ReactNode;
+  castShadow?: boolean;
+  receiveShadow?: boolean;
+  ref?: Ref<THREE.Group>; // ✅ compatible avec Merged
 }
 
-export type InstancedComponents = {
-  [K in keyof KnownInstances]: React.FC<ObjectProps>;
-} & Record<string, React.FC<ObjectProps>>;
 
-type KnownInstances = {
-  Object: unknown;
-  Object1: unknown;
-  Object3: unknown;
-  Object13: unknown;
-  Object14: unknown;
-  Object23: unknown;
-  Object24: unknown;
-  Object32: unknown;
-  Object36: unknown;
-  Object45: unknown;
-  Object46: unknown;
-  Object47: unknown;
-  Object48: unknown;
-  Sphere: unknown;
-};
+export const ForceMerged = forwardRef<THREE.Group, ForceMergedProps>((props, ref) => {
+  return (
+    <Merged ref={ref} {...props}>
+      {(mergedInstances) => (
+        <InstancesContext.Provider value={mergedInstances}>
+          {props.children(mergedInstances)}
+        </InstancesContext.Provider>
+      )}
+    </Merged>
+  );
+});
 
-type MergedProps = {
-  meshes: Record<string, THREE.Mesh>;
-  children: (mergedInstances: InstancedComponents) => React.ReactNode;
-} & React.JSX.IntrinsicElements['group']; // ou autre selon le type réel
-
-type BackgroundGLTF = GLTF & { nodes: GLTFNodes };
-
-export const context = createContext<InstancedComponents | null>(null);
 
 export function Instances({ children, ...props }: InstancesProps) {
-  const { nodes } = useGLTF('/background2.glb') as BackgroundGLTF as {
-    nodes: GLTFNodes;
-  };
+  const ref = useRef<THREE.Group>(null);
+  const { nodes } = useGLTF('/modelisation/background2.glb') as unknown as { nodes: GLTFNodes };
 
-  const instances = useMemo<Record<string, THREE.Mesh>>(() => ({
+  const instances = useMemo(() => ({
     Object: nodes.Object_4,
     Object1: nodes.Object_16,
     Object3: nodes.Object_52,
@@ -127,29 +67,27 @@ export function Instances({ children, ...props }: InstancesProps) {
     Sphere: nodes.Sphere,
   }), [nodes]);
 
-  return React.createElement<MergedProps>(
-    Merged,
-    {
-      meshes: instances,
-      ...props,
-      children: (mergedInstances: InstancedComponents) => (
-        <context.Provider value={mergedInstances}>
+  return (
+    <Merged ref={ref} meshes={instances} {...props}>
+      {(mergedInstances) => (
+        <InstancesContext.Provider value={mergedInstances}>
           {children}
-        </context.Provider>
-      )
-    }
+        </InstancesContext.Provider>
+      )}
+    </Merged>
   );
 }
 
 
 
+
 export function Computers(props: GroupProps) {
-  const { nodes: n, materials: m } = useGLTF('/background2.glb') as unknown as {
+  const { nodes: n, materials: m } = useGLTF('/modelisation/background2.glb') as unknown as {
     nodes: GLTFNodes;
     materials: GLTFMaterials;
   };
 
-  const instances = useContext(context);
+  const instances = useInstances();
   if (!instances) return null;
 
   return (
@@ -275,7 +213,7 @@ interface ScreenProps extends GroupProps {
 }
 
 export function Screen({ frame, panel, children, ...props }: ScreenProps) {
-  const { nodes, materials } = useGLTF('/background2.glb') as unknown as {
+  const { nodes, materials } = useGLTF('/modelisation/background2.glb') as unknown as {
     nodes: Record<string, THREE.Mesh>;
     materials: {
       Texture: THREE.Material;
@@ -346,7 +284,7 @@ export function ScreenText({ invert = false, x = 0, y = 1.2, ...props }: ScreenT
 }
 
 
-function ScreenInteractive(props: React.JSX.IntrinsicAttributes & ScreenProps) {
+function ScreenInteractive(props: JSX.IntrinsicAttributes & ScreenProps) {
   return (
     <Screen {...props}>
       <PerspectiveCamera makeDefault manual aspect={1 / 1} position={[0, 0, 10]} />
@@ -369,12 +307,22 @@ interface Instances {
 }
 
 interface LedsProps {
-  instances: Instances;
+  instances: InstancedComponents;
 }
+
+// function InstanceSphere(props: ObjectProps) {
+//   const { color, ...rest } = props;
+//   const instances = useInstances();
+
+//   const colorValue =
+//     Array.isArray(color) ? new THREE.Color(...color) : color;
+
+//   return <instances.Sphere {...rest} color={colorValue} />;
+// }
 
 export function Leds({ instances }: LedsProps) {
   const ref = useRef<THREE.Group>(null!);
-  const { nodes } = useGLTF('/background2.glb') as unknown as {
+  const { nodes } = useGLTF('/modelisation/background2.glb') as unknown as {
     nodes: {
       Sphere: THREE.Mesh;
     };
@@ -415,21 +363,6 @@ export function Leds({ instances }: LedsProps) {
   );
 }
 
-class SceneErrorBoundary extends React.Component<{ children: ReactNode }> {
-  state = { hasError: false };
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) return <div>Erreur dans la scène 3D</div>;
-    return this.props.children;
-  }
-}
-
-
-
 export function SafePostEffects() {
   const { camera, gl, size } = useThree();
   const [ready, setReady] = useState(false);
@@ -458,60 +391,65 @@ export function SafePostEffects() {
 }
 
 
-export default function Presentation() {
-  const rootElement = document.getElementById('root');
-  if (!rootElement) return null;
-
+export default function Presentation({ activeScene, position }: { activeScene: number, position?: [number, number, number]; activeCamera?: number }) {
   return (
-    <div style={{ height: '100vh', width: '100vw', position: 'relative' }}>
-      <SceneErrorBoundary>
-        <Canvas shadows dpr={[1, 1.5]} camera={{ position: [-1.5, 1, 5.5], fov: 45, near: 1, far: 20 }} eventSource={rootElement} eventPrefix="client">
-          {/* Lights */}
+    <group position={position || [0, 0, 0]}>
+      {/* Lights */}
+      {activeScene === 0 && (
+        <>
           <color attach="background" args={['black']} />
           <hemisphereLight intensity={0.15} groundColor="black" />
           <spotLight decay={0} position={[10, 20, 10]} angle={0.12} penumbra={1} intensity={1} castShadow shadow-mapSize={1024} />
-          {/* Main scene */}
-          <group position={[-0, -1, 0]}>
-            {/* Auto-instanced sketchfab model */}
-            <Instances>
-              <Computers scale={0.5} />
-            </Instances>
-            {/* Plane reflections + distance blur */}
-            <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[50, 50]} />
-              <MeshReflectorMaterial
-                blur={[300, 30]}
-                resolution={2048}
-                mixBlur={1}
-                mixStrength={180}
-                roughness={1}
-                depthScale={1.2}
-                minDepthThreshold={0.4}
-                maxDepthThreshold={1.4}
-                color="#202020"
-                metalness={0.8}
-              />
-            </mesh>
-            {/* Bunny and a light give it more realism */}
-            {/* <Bun scale={0.4} position={[0, 0.3, 0.5]} rotation={[0, -Math.PI * 0.85, 0]} /> */}
-            <pointLight distance={1.5} intensity={1} position={[-0.15, 0.7, 0]} color="orange" />
-          </group>
-          {/* Postprocessing */}
-          <SafePostEffects />
+        </>
+      )}
+      {/* Main scene */}
+      <group position={[-0, -1, 0]}>
+        {/* Auto-instanced sketchfab model */}
+        <Instances>
+          <Computers scale={0.5} />
+        </Instances>
+        {
+          activeScene === 0 && (
+            <>
+              {/* Plane reflections + distance blur */}
+              <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
+                <planeGeometry args={[50, 50]} />
+                <MeshReflectorMaterial
+                  blur={[300, 30]}
+                  resolution={2048}
+                  mixBlur={1}
+                  mixStrength={180}
+                  roughness={1}
+                  depthScale={1.2}
+                  minDepthThreshold={0.4}
+                  maxDepthThreshold={1.4}
+                  color="#202020"
+                  metalness={0.8}
+                />
+              </mesh>
+            </>
+          )}
+      </group>
+      {
+        activeScene === 0 && (
+          <>
+            {/* Postprocessing */}
+            <SafePostEffects />
 
-          {/* Camera movements */}
-          <CameraRig />
-          {/* Small helper that freezes the shadows for better performance */}
-          <BakeShadows />
-        </Canvas>
-      </SceneErrorBoundary>
-    </div>
+            {/* Camera movements */}
+            <CameraRig />
+            {/* Small helper that freezes the shadows for better performance */}
+            <BakeShadows />
+          </>
+        )}
+
+    </group>
   );
 }
 
 function CameraRig() {
   useFrame((state, delta) => {
-    easing.damp3(state.camera.position, [-1 + (state.pointer.x * state.viewport.width) / 3, (1 + state.pointer.y) / 2, 5.5], 0.5, delta)
+    easing.damp3(state.camera.position, [-1 + (state.pointer.x * state.viewport.width) / 12, (1 + state.pointer.y) / 2, 2.5], 0.5, delta)
     state.camera.lookAt(0, 0, 0)
   })
   return null;
