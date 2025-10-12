@@ -22,7 +22,7 @@ import Navigat from "./components/subComponents/Navigator/Navigator";
 // import { Test } from './components/Test';
 
 function Home() {
-  const [sceneIndex, setSceneIndex] = useState(2); // 0: Presentation, 1: ProjectsList, 2: SkillsList
+  const [sceneIndex, setSceneIndex] = useState(0); // 0: Presentation, 1: ProjectsList, 2: SkillsList
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);

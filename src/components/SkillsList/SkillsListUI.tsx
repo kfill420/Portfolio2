@@ -26,7 +26,7 @@ export default function SkillsListUI({ device, setOrganizedView, radius, setRadi
   return (
     <div className="projects3">
       <button className="params_button" onClick={() => setParameterIsOpen((v) => !v)}>
-        <img src={'/icons/parameter.png'} alt="Bouton d'ouverture des paramètres" />
+        <img className="params_button_img" src={'/icons/parameter.png'} alt="Bouton d'ouverture des paramètres" />
       </button>
 
       <div className={showParameter() ? "params params-open" : "params"}>

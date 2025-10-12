@@ -193,13 +193,13 @@ export function Computers(props: GroupProps) {
       <instances.Object36 position={[-5.25, 4.29, -1.47]} rotation={[0, 1.25, 0]} />
       <mesh castShadow receiveShadow geometry={n.Object_204.geometry} material={m.Texture} position={[3.2, 4.29, -3.09]} rotation={[-Math.PI, 0.56, 0]} scale={-1} />
       <ScreenInteractive frame="Object_206" panel="Object_207" position={[0.27, 1.53, -2.61]} />
-      <ScreenText frame="Object_209" panel="Object_210" y={5} position={[-1.43, 2.5, -1.8]} rotation={[0, 1, 0]} text="Dev" />
-      <ScreenText invert frame="Object_212" panel="Object_213" x={-5} y={5} position={[-2.73, 0.63, -0.52]} rotation={[0, 1.09, 0]} text="< %/>" />
+      <ScreenText frame="Object_209" panel="Object_210" y={5} position={[-1.43, 2.5, -1.8]} rotation={[0, 1, 0]} text="Portfolio" />
+      <ScreenText invert frame="Object_212" panel="Object_213" x={-5} y={5} position={[-2.73, 0.63, -0.52]} rotation={[0, 1.09, 0]} text="< % />" />
       <ScreenText invert frame="Object_215" panel="Object_216" position={[1.84, 0.38, -1.77]} rotation={[0, -Math.PI / 9, 0]} text="Backend" />
       <ScreenText invert frame="Object_218" panel="Object_219" x={-5} position={[3.11, 2.15, -0.18]} rotation={[0, -0.79, 0]} scale={0.81} text="Frontend" />
       <ScreenText frame="Object_221" panel="Object_222" y={5} position={[-3.42, 3.06, 1.3]} rotation={[0, 1.22, 0]} scale={0.9} text="React" />
       <ScreenText frame="Object_224" panel="Object_225" position={[-3.9, 4.29, -2.64]} rotation={[0, 0.54, 0]} text="Développeur" />
-      <ScreenText invert frame="Object_227" panel="Object_228" position={[0.96, 4.28, -4.2]} rotation={[0, -0.65, 0]} text="Alexis Vignot" />
+      <ScreenText author frame="Object_227" panel="Object_228" position={[0.96, 4.28, -4.2]} rotation={[0, -0.65, 0]} text="Alexis Vignot" />
       <ScreenText frame="Object_300" panel="Object_301" position={[4.68, 4.29, -1.56]} rotation={[0, -Math.PI / 3, 0]} text="Fullstack" />
       <Leds instances={instances} />
     </group>
@@ -241,6 +241,7 @@ export function Screen({ frame, panel, children, ...props }: ScreenProps) {
 
 
 export interface ScreenTextProps {
+  author?: boolean;
   frame: string;
   panel: string;
   position: [number, number, number];
@@ -253,20 +254,20 @@ export interface ScreenTextProps {
 }
 
 
-export function ScreenText({ invert = false, x = 0, y = 1.2, ...props }: ScreenTextProps) {
+export function ScreenText({ author = false, invert = false, x = 0, y = 1.2, ...props }: ScreenTextProps) {
   const textRef = useRef<THREE.Mesh>(null);
   const rand = Math.random() * 10000;
 
   useFrame((state) => {
     if (textRef.current) {
-      textRef.current.position.x = x + Math.sin(rand + state.clock.elapsedTime / 4) * 8;
+      textRef.current.position.x = x + Math.sin(rand + state.clock.elapsedTime / 4) * 4;
     }
   });
 
   return (
     <Screen {...props}>
       <PerspectiveCamera makeDefault manual aspect={1 / 1} position={[0, 0, 15]} />
-      <color attach="background" args={[invert ? 'black' : '#35c19f']} />
+      <color attach="background" args={[invert ? 'black' : author ? 'orange' : '#35c19f']} />
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} />
       <Text
@@ -288,7 +289,7 @@ function ScreenInteractive(props: JSX.IntrinsicAttributes & ScreenProps) {
   return (
     <Screen {...props}>
       <PerspectiveCamera makeDefault manual aspect={1 / 1} position={[0, 0, 10]} />
-      <color attach="background" args={['orange']} />
+      <color attach="background" args={['blue']} />
       <ambientLight intensity={Math.PI / 2} />
       <pointLight decay={0} position={[10, 10, 10]} intensity={Math.PI} />
       <pointLight decay={0} position={[-10, -0, -10]} />
@@ -309,16 +310,6 @@ interface Instances {
 interface LedsProps {
   instances: InstancedComponents;
 }
-
-// function InstanceSphere(props: ObjectProps) {
-//   const { color, ...rest } = props;
-//   const instances = useInstances();
-
-//   const colorValue =
-//     Array.isArray(color) ? new THREE.Color(...color) : color;
-
-//   return <instances.Sphere {...rest} color={colorValue} />;
-// }
 
 export function Leds({ instances }: LedsProps) {
   const ref = useRef<THREE.Group>(null!);
@@ -449,7 +440,7 @@ export default function Presentation({ activeScene, position }: { activeScene: n
 
 function CameraRig() {
   useFrame((state, delta) => {
-    easing.damp3(state.camera.position, [-1 + (state.pointer.x * state.viewport.width) / 12, (1 + state.pointer.y) / 2, 2.5], 0.5, delta)
+    easing.damp3(state.camera.position, [(state.pointer.x * state.viewport.width) / 12, (1 + state.pointer.y) / 2, -12.5], 0.5, delta)
     state.camera.lookAt(0, 0, 0)
   })
   return null;

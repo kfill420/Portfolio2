@@ -21,14 +21,12 @@ export default function ProjectsList({ activeScene, position = [0, 0, 0], setFoc
     <group position={position}>
       <fog attach="fog" args={['#a79', 9.5, 12]} />
       {
-        activeScene === 1 && (
-          <ScrollControls pages={4} infinite>
-            <Rig rotation={[0, 0, 0.15]}>
-              <Carousel setFocusIndex={setFocusIndex} />
-            </Rig>
-            <Banner position={[0, -0.15, 0]} />
-          </ScrollControls>
-        )
+        <ScrollControls pages={4} enabled={activeScene == 1}>
+          <Rig rotation={[0, 0, 0.15]}>
+            <Carousel setFocusIndex={setFocusIndex} />
+          </Rig>
+          <Banner position={[0, -0.15, 0]} />
+        </ScrollControls>
       }
 
       {activeScene == 1 && <Environment preset="night" background blur={0.5} />}
@@ -41,12 +39,19 @@ export function Rig(props: RigProps) {
 
   const ref = useRef<THREE.Group>(null);
   const scroll = useScroll()
-  useFrame((state, delta) => {
+  useFrame((state) => {
+    // useFrame((state, delta) => {
     if (!ref.current) return;
     ref.current.rotation.y = -scroll.offset * (Math.PI * 2);
     if (state.events?.update)
       state.events.update()
-    easing.damp3(state.camera.position, [-state.pointer.x * 1, state.pointer.y + 1.5, 10], 0.3, delta)
+    easing.damp3(
+      state.camera.position,
+      [0, 1.5, 10 + scroll.delta * 5],
+      // [-state.pointer.x * 0.5, state.pointer.y * 0.3 + 1.5, 10],
+      // 0.3,
+      // delta
+    )
     state.camera.lookAt(0, 0, 0)
   })
   return <group ref={ref} {...props} />
@@ -131,7 +136,7 @@ const Card = React.forwardRef<THREE.Group, CardProps>(({ projectUrl, url, ...pro
   }, [ref]);
 
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     const mesh = imageRef.current;
     if (!mesh || !mesh.material) return;
 
@@ -180,7 +185,7 @@ export function Banner(props: BannerProps) {
     });
   }, [texture]);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     const mesh = ref.current;
     if (!mesh || !mesh.material) return;
     const mat = mesh.material as MeshSineMaterial;

@@ -8,8 +8,8 @@ export function useSceneTransition(activeScene: number) {
 
   const scenePositions: Record<number, [number, number, number]> = {
     0: [0, 0, 0],     // Presentation
-    1: [-20, 0, 0],    // ProjectsList
-    2: [-40, 0, 0],    // SkillsList
+    1: [-40, 0, 0],    // ProjectsList
+    2: [-80, 0, 4],    // SkillsList
   };
 
   // Position du groupe principal
@@ -23,7 +23,7 @@ export function useSceneTransition(activeScene: number) {
     const target = new THREE.Vector3(...scenePositions[activeScene]);
     const desiredPosition = new THREE.Vector3(target.x, target.y + 1.5, target.z + 6);
 
-    camera.position.lerp(desiredPosition, 0.05); // interpolation douce
+    camera.position.lerp(desiredPosition, 0.03); // interpolation douce
 
     camera.lookAt(target);
     camera.updateProjectionMatrix();
