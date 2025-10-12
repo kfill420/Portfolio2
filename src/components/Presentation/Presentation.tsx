@@ -428,7 +428,7 @@ export default function Presentation({ activeScene, position }: { activeScene: n
             <SafePostEffects />
 
             {/* Camera movements */}
-            <CameraRig />
+            {/* <CameraRig /> */}
             {/* Small helper that freezes the shadows for better performance */}
             <BakeShadows />
           </>

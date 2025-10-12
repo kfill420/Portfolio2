@@ -3,6 +3,7 @@ import ProjectsList from "../../ProjectsList/ProjectsList";
 import SkillsList from "../../SkillsList/SkillsList";
 import Presentation from "../../Presentation/Presentation";
 import { useSceneTransition } from "../../../hooks/useSceneTransition.ts";
+import { CameraController } from "../CameraController/CameraController.tsx";
 
 interface SceneManagerProps {
   activeScene: number;
@@ -21,9 +22,10 @@ export function SceneManager({ activeScene, device, selectedTech, setSelectedTec
 
   return (
     <animated.group position={position.to((x, y, z) => [x, y, z])}>
-      <SkillsList activeScene={activeScene} position={[80, 0, 0]} device={device} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
-      <ProjectsList activeScene={activeScene} position={[40, 1, 7]} setFocusIndex={setFocusIndex} />
+      <CameraController activeScene={activeScene} />
       <Presentation activeScene={activeScene} position={[0, 0, 0]} />
+      <ProjectsList activeScene={activeScene} position={[40, 1.4, 12]} setFocusIndex={setFocusIndex} />
+      <SkillsList activeScene={activeScene} position={[80, 0, 0]} device={device} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
     </animated.group>
   );
 }

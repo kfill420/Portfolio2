@@ -21,7 +21,7 @@ export default function ProjectsList({ activeScene, position = [0, 0, 0], setFoc
     <group position={position}>
       <fog attach="fog" args={['#a79', 9.5, 12]} />
       {
-        <ScrollControls pages={4} enabled={activeScene == 1}>
+        <ScrollControls pages={4} enabled={activeScene == 1} infinite>
           <Rig rotation={[0, 0, 0.15]}>
             <Carousel setFocusIndex={setFocusIndex} />
           </Rig>
@@ -40,19 +40,11 @@ export function Rig(props: RigProps) {
   const ref = useRef<THREE.Group>(null);
   const scroll = useScroll()
   useFrame((state) => {
-    // useFrame((state, delta) => {
     if (!ref.current) return;
     ref.current.rotation.y = -scroll.offset * (Math.PI * 2);
     if (state.events?.update)
       state.events.update()
-    easing.damp3(
-      state.camera.position,
-      [0, 1.5, 10 + scroll.delta * 5],
-      // [-state.pointer.x * 0.5, state.pointer.y * 0.3 + 1.5, 10],
-      // 0.3,
-      // delta
-    )
-    state.camera.lookAt(0, 0, 0)
+
   })
   return <group ref={ref} {...props} />
 }

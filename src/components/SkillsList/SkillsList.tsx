@@ -33,7 +33,7 @@ export default function SkillsList({
       {
         activeScene === 2 && (
           <>
-            <CameraFocus target={[0, 0, 3]} />
+            {/* <CameraFocus target={[0, 0, 3]} /> */}
             {/* <ambientLight intensity={0.5} />
             <directionalLight position={[5, 5, 5]} /> */}
             <Environment preset="night" background blur={0.5} />
@@ -68,16 +68,16 @@ export default function SkillsList({
   );
 }
 
-export function CameraFocus({ target }: { target: [number, number, number] }) {
-  const { camera } = useThree();
-  const targetVec = new THREE.Vector3(...target);
+// export function CameraFocus({ target }: { target: [number, number, number] }) {
+//   const { camera } = useThree();
+//   const targetVec = new THREE.Vector3(...target);
 
-  useFrame(() => {
-    camera.lookAt(targetVec);
-  });
+//   useFrame(() => {
+//     camera.lookAt(targetVec);
+//   });
 
-  return null;
-}
+//   return null;
+// }
 
 
 export function SphereTitle({ text }: { text: string }) {
