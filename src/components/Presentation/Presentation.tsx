@@ -4,7 +4,6 @@ import React, { useMemo, useRef, useState, useEffect, forwardRef } from 'react'
 import type { FC, ReactNode, Ref } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing';
-import { easing } from 'maath';
 import { useGLTF, Merged, RenderTexture, PerspectiveCamera, Text, MeshReflectorMaterial, BakeShadows } from '@react-three/drei'
 import { SpinningBox } from './SpinningBox.tsx'
 import './utils.ts';
@@ -354,14 +353,20 @@ export function Leds({ instances }: LedsProps) {
   );
 }
 
-export function SafePostEffects() {
+export function SafePostEffects({ activeScene }: { activeScene: number }) {
   const { camera, gl, size } = useThree();
   const [ready, setReady] = useState(false);
+
+  // const bloom = useDampedValue(activeScene === 0 ? 1.5 : 0);
+  // const bokeh = useDampedValue(activeScene === 0 ? 10 : 0);
+  const bloom = activeScene === 0 ? 1.5 : 0;
+  const bokeh = activeScene === 0 ? 10 : 0;
+
 
   useEffect(() => {
     let timeout: number;
     if (gl && gl.domElement && size.width > 0 && size.height > 0) {
-      timeout = window.setTimeout(() => setReady(true), 50); // attend une frame complète
+      timeout = window.setTimeout(() => setReady(true), 50);
     }
     return () => clearTimeout(timeout);
   }, [gl, size]);
@@ -375,8 +380,18 @@ export function SafePostEffects() {
 
   return (
     <EffectComposer enableNormalPass={false}>
-      <Bloom luminanceThreshold={0} mipmapBlur luminanceSmoothing={0.0} intensity={2} />
-      <DepthOfField target={target} focalLength={0.3} bokehScale={10} height={700} />
+      <Bloom
+        luminanceThreshold={0}
+        mipmapBlur
+        luminanceSmoothing={0.0}
+        intensity={bloom}
+      />
+      <DepthOfField
+        target={target}
+        focalLength={0.3}
+        bokehScale={bokeh}
+        height={700}
+      />
     </EffectComposer>
   );
 }
@@ -422,26 +437,18 @@ export default function Presentation({ activeScene, position }: { activeScene: n
           )}
       </group>
       {
-        activeScene === 0 && (
-          <>
-            {/* Postprocessing */}
-            <SafePostEffects />
 
-            {/* Camera movements */}
-            {/* <CameraRig /> */}
-            {/* Small helper that freezes the shadows for better performance */}
-            <BakeShadows />
-          </>
-        )}
+        <>
+          {/* Postprocessing */}
+          <SafePostEffects activeScene={activeScene} />
+
+          {/* Camera movements */}
+          {/* <CameraRig /> */}
+          {/* Small helper that freezes the shadows for better performance */}
+          <BakeShadows />
+        </>
+      }
 
     </group>
   );
-}
-
-function CameraRig() {
-  useFrame((state, delta) => {
-    easing.damp3(state.camera.position, [(state.pointer.x * state.viewport.width) / 12, (1 + state.pointer.y) / 2, -12.5], 0.5, delta)
-    state.camera.lookAt(0, 0, 0)
-  })
-  return null;
 }

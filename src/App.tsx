@@ -19,6 +19,8 @@ import redirections from "./data/redirections.json";
 import SkillsListUI from "./components/SkillsList/SkillsListUI";
 import * as THREE from "three";
 import Navigat from "./components/subComponents/Navigator/Navigator";
+import './App.css';
+import { PreloadCanvas } from "./components/subComponents/PreloadCanvas/PreloadCanvas";
 // import { Test } from './components/Test';
 
 function Home() {
@@ -32,10 +34,10 @@ function Home() {
   const [focusIndex, setFocusIndex] = useState<number>(0);
 
   //Project3 States
-  const device = useDeviceType();
+  const deviceType = useDeviceType();
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
   const [organizedView, setOrganizedView] = useState<boolean>(false);
-  const [radius, setRadius] = useState(device === 'desktop' ? 1.5 : 1);
+  const [radius, setRadius] = useState(deviceType.device === 'desktop' ? 1.5 : 1);
   const [speed, setSpeed] = useState(0.3);
   const [parameterIsOpen, setParameterIsOpen] = useState<boolean>(false);
 
@@ -52,32 +54,38 @@ function Home() {
     }
   }, [data]);
 
+  const [ready, setReady] = useState(false);
+
   return (
-    <div style={{ overflow: "hidden", height: "100vh", width: "100vw" }}>
+    <div className="app" style={{ overflow: "hidden", height: "100vh", width: "100vw", scrollbarWidth: "none" }}>
 
-      <Navigat sceneIndex={sceneIndex} setSceneIndex={setSceneIndex} />
+      <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} />
 
-      <Canvas shadows dpr={[1, 1.5]}>
-        <SceneManager
-          activeScene={sceneIndex}
-          device={device}
-          selectedTech={selectedTech}
-          setSelectedTech={setSelectedTech}
-          organizedView={organizedView}
-          radius={radius}
-          speed={speed}
-          setFocusIndex={setFocusIndex}
-        />
-      </Canvas>
+      {!ready && <PreloadCanvas onReady={() => setReady(true)} />}
+
+      {ready &&
+        <Canvas shadows dpr={[1, 1.5]}>
+          <SceneManager
+            activeScene={sceneIndex}
+            deviceType={deviceType}
+            selectedTech={selectedTech}
+            setSelectedTech={setSelectedTech}
+            organizedView={organizedView}
+            radius={radius}
+            speed={speed}
+            setFocusIndex={setFocusIndex}
+          />
+        </Canvas>
+      }
+
 
       {
-        sceneIndex === 1 &&
-        <ProjectsListUI focusIndex={focusIndex} />
+
+        <ProjectsListUI activeScene={sceneIndex} focusIndex={focusIndex} />
       }
 
       {
-        sceneIndex === 2 &&
-        <SkillsListUI device={device} setOrganizedView={setOrganizedView} radius={radius} setRadius={setRadius} speed={speed} setSpeed={setSpeed} parameterIsOpen={parameterIsOpen} setParameterIsOpen={setParameterIsOpen} />
+        <SkillsListUI activeScene={sceneIndex} deviceType={deviceType} setOrganizedView={setOrganizedView} radius={radius} setRadius={setRadius} speed={speed} setSpeed={setSpeed} parameterIsOpen={parameterIsOpen} setParameterIsOpen={setParameterIsOpen} />
       }
 
       {/* <Presentation enterprise={data} />
@@ -89,7 +97,7 @@ function Home() {
       <Footer /> */}
 
       {/* <Networks scrollToTarget={scrollToTarget} /> */}
-    </div>
+    </div >
   )
 }
 

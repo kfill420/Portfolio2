@@ -1,8 +1,13 @@
 import './SkillsList.scss';
 
 interface SkillsListUIProps {
+  activeScene: number;
   position?: [number, number, number];
-  device: 'mobile' | 'tablet' | 'desktop';
+  deviceType:
+  {
+    device: 'mobile' | 'tablet' | 'desktop';
+    orientation: 'portrait' | 'landscape';
+  }
   setOrganizedView: React.Dispatch<React.SetStateAction<boolean>>;
   radius: number;
   setRadius: React.Dispatch<React.SetStateAction<number>>;
@@ -12,9 +17,11 @@ interface SkillsListUIProps {
   setParameterIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SkillsListUI({ device, setOrganizedView, radius, setRadius, speed, setSpeed, parameterIsOpen, setParameterIsOpen }: SkillsListUIProps) {
+export default function SkillsListUI({ activeScene, deviceType, setOrganizedView, radius, setRadius, speed, setSpeed, parameterIsOpen, setParameterIsOpen }: SkillsListUIProps) {
+  const { device } = deviceType;
 
   const showParameter = () => {
+    if (activeScene !== 2) return false;
     if (device === "mobile" || device === "tablet") {
       if (parameterIsOpen) return true;
       else return false;
@@ -23,13 +30,19 @@ export default function SkillsListUI({ device, setOrganizedView, radius, setRadi
     }
   }
 
+  const showParameterButton = () => {
+    if (activeScene !== 2) return false;
+    else return true;
+
+  }
+
   return (
     <div className="projects3">
-      <button className="params_button" onClick={() => setParameterIsOpen((v) => !v)}>
+      <button className={`params_button ${showParameterButton() ? "params_button params_button-in" : "params_button-out"} ${parameterIsOpen ? "params_button-active" : ""}`} onClick={() => setParameterIsOpen((v) => !v)}>
         <img className="params_button_img" src={'/icons/parameter.png'} alt="Bouton d'ouverture des paramètres" />
       </button>
 
-      <div className={showParameter() ? "params params-open" : "params"}>
+      <div className={showParameter() ? "params params-active" : "params"}>
 
         <label className="params_organizedView">
           <span className="params_organizedView_label">Vue 3D</span>

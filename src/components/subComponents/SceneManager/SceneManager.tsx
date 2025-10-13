@@ -7,7 +7,11 @@ import { CameraController } from "../CameraController/CameraController.tsx";
 
 interface SceneManagerProps {
   activeScene: number;
-  device: 'mobile' | 'tablet' | 'desktop';
+  deviceType:
+  {
+    device: 'mobile' | 'tablet' | 'desktop';
+    orientation: 'portrait' | 'landscape';
+  }
   selectedTech: string | null;
   setSelectedTech: (tech: string | null) => void;
   organizedView: boolean;
@@ -16,7 +20,7 @@ interface SceneManagerProps {
   setFocusIndex: (index: number) => void;
 }
 
-export function SceneManager({ activeScene, device, selectedTech, setSelectedTech, organizedView, radius, speed, setFocusIndex }: SceneManagerProps) {
+export function SceneManager({ activeScene, deviceType, selectedTech, setSelectedTech, organizedView, radius, speed, setFocusIndex }: SceneManagerProps) {
   const { position } = useSceneTransition(activeScene);
 
 
@@ -25,7 +29,7 @@ export function SceneManager({ activeScene, device, selectedTech, setSelectedTec
       <CameraController activeScene={activeScene} />
       <Presentation activeScene={activeScene} position={[0, 0, 0]} />
       <ProjectsList activeScene={activeScene} position={[40, 1.4, 12]} setFocusIndex={setFocusIndex} />
-      <SkillsList activeScene={activeScene} position={[80, 0, 0]} device={device} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
+      <SkillsList position={[80, 0, 0]} deviceType={deviceType} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
     </animated.group>
   );
 }

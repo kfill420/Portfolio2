@@ -1,9 +1,8 @@
-import './ProjectsList.scss';
 import * as THREE from 'three';
 import React, { useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import type { ThreeEvent } from '@react-three/fiber';
-import { Environment, Image, ScrollControls, useScroll, useTexture } from '@react-three/drei';
+import { Image, ScrollControls, useScroll, useTexture } from '@react-three/drei';
 import { easing } from 'maath';
 import './utils.ts';
 import { BentPlaneGeometry, MeshSineMaterial } from "./utils.ts";
@@ -19,9 +18,13 @@ export default function ProjectsList({ activeScene, position = [0, 0, 0], setFoc
 
   return (
     <group position={position}>
-      <fog attach="fog" args={['#a79', 9.5, 12]} />
+      {/* <fog attach="fog" args={['#a79', 9.5, 12]} /> */}
       {
-        <ScrollControls pages={4} enabled={activeScene == 1} infinite>
+        <ScrollControls pages={4} enabled={activeScene == 1} infinite style={{
+          scrollbarWidth: 'none', // Firefox
+          msOverflowStyle: 'none', // IE
+        }}
+        >
           <Rig rotation={[0, 0, 0.15]}>
             <Carousel setFocusIndex={setFocusIndex} />
           </Rig>
@@ -29,7 +32,7 @@ export default function ProjectsList({ activeScene, position = [0, 0, 0], setFoc
         </ScrollControls>
       }
 
-      {activeScene == 1 && <Environment preset="night" background blur={0.5} />}
+      {/* {activeScene == 1 && <Environment preset="night" background blur={0.5} />} */}
     </group>
   );
 }
@@ -166,7 +169,7 @@ export function Banner(props: BannerProps) {
   // Configure texture
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   texture.anisotropy = 16;
-  texture.repeat.set(15, 1);
+  texture.repeat.set(10, 1);
 
   // Create material
   const material = useMemo(() => {

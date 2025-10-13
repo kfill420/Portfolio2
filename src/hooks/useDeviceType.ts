@@ -1,24 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-export function useDeviceType() {
-  const [device, setDevice] = useState<'mobile' | 'tablet' | 'desktop'>(() => {
+type DeviceType = 'mobile' | 'tablet' | 'desktop';
+type Orientation = 'portrait' | 'landscape';
+
+export function useDeviceType(): { device: DeviceType; orientation: Orientation } {
+  const getDevice = () => {
     const width = window.innerWidth;
     if (width < 768) return 'mobile';
     if (width < 1024) return 'tablet';
     return 'desktop';
-  });
+  };
+
+  const getOrientation = () =>
+    window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+
+  const [device, setDevice] = useState<DeviceType>(getDevice);
+  const [orientation, setOrientation] = useState<Orientation>(getOrientation);
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 768) setDevice('mobile');
-      else if (width < 1024) setDevice('tablet');
-      else setDevice('desktop');
+      setDevice(getDevice());
+      setOrientation(getOrientation());
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return device;
+  return { device, orientation };
 }

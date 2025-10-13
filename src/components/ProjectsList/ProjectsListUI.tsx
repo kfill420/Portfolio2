@@ -1,24 +1,39 @@
 import './ProjectsList.scss';
 
 interface ProjectsListUIProps {
+  activeScene: number;
   focusIndex: number;
 }
 
-export default function ProjectsListUI({ focusIndex }: ProjectsListUIProps) {
+export default function ProjectsListUI({ activeScene, focusIndex }: ProjectsListUIProps) {
+  const isActive = activeScene === 1;
+
+  const projectTitle = [
+    "SpieCraft",
+    "GitHub Searcher",
+    "Todolist",
+    "CasaLink",
+    "DTK Shop",
+    "Ino Bank"
+  ];
+
   const projectDescriptions = [
-    "SpieCraft — Site e-commerce de poivres responsive",
-    "GitHub Searcher — Recherche avancée GitHub via API",
-    "Todolist — Gestion de tâches simple et efficace",
-    "CasaLink — Application de gestion d'emploi du temps familial",
-    "DTK Shop — Boutique tech sécurisée avec référencement optimisé",
-    "Ino Bank — Application mobile de banque en ligne moderne"
+    "Site e-commerce de poivres responsive",
+    "Recherche avancée GitHub via API",
+    "Gestion de tâches simple et efficace",
+    "Application de gestion d'emploi du temps familial",
+    "Boutique tech sécurisée avec référencement optimisé",
+    "Application mobile de banque en ligne moderne"
   ];
 
   return (
-    <div className="projects2">
-      <div className="description-overlay">
+    <div className="projectsListUI">
+      <span className={isActive ? "projectsListUI_title projectsListUI_title-active" : "projectsListUI_title"}>
+        {projectTitle[focusIndex]}
+      </span>
+      <span className={isActive ? "projectsListUI_description projectsListUI_description-active" : "projectsListUI_description"}>
         {projectDescriptions[focusIndex]}
-      </div>
+      </span>
     </div>
 
   );

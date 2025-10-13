@@ -1,15 +1,18 @@
 import './SkillsList.scss';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Image, useTexture, Html, Environment } from '@react-three/drei';
+import { Image, useTexture, Html } from '@react-three/drei';
 import { frontendIcons, backendIcons, gestionIcons, descriptions } from './SkillsData';
 
 
 interface SkillsListProps {
-  activeScene: number;
   position?: [number, number, number];
-  device: 'mobile' | 'tablet' | 'desktop';
+  deviceType:
+  {
+    device: 'mobile' | 'tablet' | 'desktop';
+    orientation: 'portrait' | 'landscape';
+  }
   selectedTech: string | null;
   setSelectedTech: (tech: string | null) => void;
   organizedView: boolean;
@@ -18,39 +21,48 @@ interface SkillsListProps {
 }
 
 export default function SkillsList({
-  activeScene,
   position = [0, 0, 0],
-  device,
+  deviceType,
   selectedTech,
   setSelectedTech,
   organizedView,
   radius,
   speed
 }: SkillsListProps) {
+  const { device, orientation } = deviceType;
+
+  const responsivePosition = (group: string): [number, number, number] => {
+    switch (group) {
+      case 'frontend':
+        if (device === 'desktop') return [-3.5, 1.5, 0];
+        else if (orientation === 'landscape') return [-3.5, 1.5, 2];
+        else return [0, 3, 0];
+      case 'backend':
+        if (device === 'desktop') return [3.5, 1.5, 0];
+        else if (orientation === 'landscape') return [3.5, 1.5, 2];
+        else return [0, 0, 0];
+      case 'gestion':
+        if (device === 'desktop') return [0, -2, 0];
+        else if (orientation === 'landscape') return [0, 0, 2];
+        else return [0, -3, 0];
+      default:
+        return [0, 0, 0];
+    }
+  }
 
   return (
     <group position={position}>
-      {
-        activeScene === 2 && (
-          <>
-            {/* <CameraFocus target={[0, 0, 3]} /> */}
-            {/* <ambientLight intensity={0.5} />
-            <directionalLight position={[5, 5, 5]} /> */}
-            <Environment preset="night" background blur={0.5} />
-          </>
-        )}
-
-      <group position={device === 'desktop' ? [-3.5, 1.5, 0] : [0, 3, 0]}>
+      <group position={responsivePosition('frontend')}>
         <SphereTitle text="Frontend" />
         <IconSphere icons={frontendIcons} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
       </group>
 
-      <group position={device === 'desktop' ? [3.5, 1.5, 0] : [0, 0, 0]}>
+      <group position={responsivePosition('backend')}>
         <SphereTitle text="Backend" />
         <IconSphere icons={backendIcons} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
       </group>
 
-      <group position={device === 'desktop' ? [0, -2, 0] : [0, -3, 0]}>
+      <group position={responsivePosition('gestion')}>
         <SphereTitle text="Gestion" />
         <IconSphere icons={gestionIcons} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
       </group>
@@ -67,18 +79,6 @@ export default function SkillsList({
     </group>
   );
 }
-
-// export function CameraFocus({ target }: { target: [number, number, number] }) {
-//   const { camera } = useThree();
-//   const targetVec = new THREE.Vector3(...target);
-
-//   useFrame(() => {
-//     camera.lookAt(targetVec);
-//   });
-
-//   return null;
-// }
-
 
 export function SphereTitle({ text }: { text: string }) {
   return (
@@ -178,8 +178,22 @@ function IconImage({
   const ref = useRef<THREE.Group>(null);
   const { camera } = useThree();
   const texture = useTexture(url);
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.generateMipmaps = false;
   const [opacity, setOpacity] = useState(0);
   const [hovered, setHovered] = useState(false);
+
+  const imageRef = useRef<THREE.Mesh>(null);
+
+  useEffect(() => {
+    if (imageRef.current?.material) {
+      (imageRef.current.material as THREE.Material).transparent = true;
+      (imageRef.current.material as THREE.Material).depthWrite = false;
+      (imageRef.current.material as THREE.Material).toneMapped = false;
+    }
+  }, []);
+
 
   const baseSize = 0.5;
   const ratio = texture.image.width / texture.image.height;
@@ -244,9 +258,8 @@ function IconImage({
       <Image
         url={url}
         scale={scale}
-        transparent
-        toneMapped={false}
         opacity={opacity}
+        ref={imageRef}
       />
     </group>
   );
