@@ -20,7 +20,7 @@ export default function ProjectsList({ activeScene, position = [0, 0, 0], setFoc
     <group position={position}>
       {/* <fog attach="fog" args={['#a79', 9.5, 12]} /> */}
       {
-        <ScrollControls pages={4} enabled={activeScene == 1} infinite style={{
+        <ScrollControls pages={activeScene == 1 ? 4 : 0} enabled={activeScene == 1} infinite style={{
           scrollbarWidth: 'none', // Firefox
           msOverflowStyle: 'none', // IE
         }}

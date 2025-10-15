@@ -28,7 +28,6 @@
   }
 
   &_button {
-
     position: absolute;
     bottom: 5rem;
     right: 2rem;
@@ -318,6 +317,11 @@
   color: #00ffff;
   cursor: pointer;
 
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    background-color: none;
+  }
 }
 
 @keyframes fadeIn {
