@@ -20,8 +20,18 @@ import SkillsListUI from "./components/SkillsList/SkillsListUI";
 import * as THREE from "three";
 import Navigat from "./components/subComponents/Navigator/Navigator";
 import './App.css';
-import { PreloadCanvas } from "./components/subComponents/PreloadCanvas/PreloadCanvas";
+import { Html, useProgress } from "@react-three/drei";
 // import { Test } from './components/Test';
+
+function Loader() {
+  const { progress } = useProgress();
+  return (
+    <Html center style={{ color: "white" }}>
+      <div>Chargement {progress.toFixed(0)}%</div>
+    </Html>
+  );
+}
+
 
 function Home() {
   const [sceneIndex, setSceneIndex] = useState(0); // 0: Presentation, 1: ProjectsList, 2: SkillsList
@@ -29,6 +39,9 @@ function Home() {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const data = params.get('data');
+
+  //Presentatin States
+  const [composerReady, setComposerReady] = useState(false);
 
   //Projects2 States
   const [focusIndex, setFocusIndex] = useState<number>(0);
@@ -54,17 +67,14 @@ function Home() {
     }
   }, [data]);
 
-  const [ready, setReady] = useState(false);
-
   return (
-    <div className="app" style={{ overflow: "hidden", height: "100vh", width: "100vw", scrollbarWidth: "none" }}>
+    <>
+      <div className="app" style={{ overflow: "hidden", height: "100vh", width: "100vw", scrollbarWidth: "none", visibility: composerReady ? 'visible' : 'hidden' }}>
 
-      <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} />
+        <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} />
 
-      {!ready && <PreloadCanvas onReady={() => setReady(true)} />}
-
-      {ready &&
         <Canvas shadows dpr={[1, 1.5]}>
+          {!composerReady && <Loader />}
           <SceneManager
             activeScene={sceneIndex}
             deviceType={deviceType}
@@ -74,21 +84,20 @@ function Home() {
             radius={radius}
             speed={speed}
             setFocusIndex={setFocusIndex}
+            onComposerReady={() => setComposerReady(true)}
           />
         </Canvas>
-      }
 
+        {
 
-      {
+          <ProjectsListUI activeScene={sceneIndex} focusIndex={focusIndex} />
+        }
 
-        <ProjectsListUI activeScene={sceneIndex} focusIndex={focusIndex} />
-      }
+        {
+          <SkillsListUI activeScene={sceneIndex} deviceType={deviceType} setOrganizedView={setOrganizedView} radius={radius} setRadius={setRadius} speed={speed} setSpeed={setSpeed} parameterIsOpen={parameterIsOpen} setParameterIsOpen={setParameterIsOpen} />
+        }
 
-      {
-        <SkillsListUI activeScene={sceneIndex} deviceType={deviceType} setOrganizedView={setOrganizedView} radius={radius} setRadius={setRadius} speed={speed} setSpeed={setSpeed} parameterIsOpen={parameterIsOpen} setParameterIsOpen={setParameterIsOpen} />
-      }
-
-      {/* <Presentation enterprise={data} />
+        {/* <Presentation enterprise={data} />
       <Draw />
       <Skills />
       <PresentationText />
@@ -96,8 +105,9 @@ function Home() {
       <Contact contactTarget={contactTarget} />
       <Footer /> */}
 
-      {/* <Networks scrollToTarget={scrollToTarget} /> */}
-    </div >
+        {/* <Networks scrollToTarget={scrollToTarget} /> */}
+      </div >
+    </>
   )
 }
 

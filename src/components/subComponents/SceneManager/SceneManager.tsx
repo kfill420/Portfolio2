@@ -18,16 +18,17 @@ interface SceneManagerProps {
   radius: number;
   speed: number;
   setFocusIndex: (index: number) => void;
+  onComposerReady?: () => void;
 }
 
-export function SceneManager({ activeScene, deviceType, selectedTech, setSelectedTech, organizedView, radius, speed, setFocusIndex }: SceneManagerProps) {
+export function SceneManager({ activeScene, deviceType, selectedTech, setSelectedTech, organizedView, radius, speed, setFocusIndex, onComposerReady }: SceneManagerProps) {
   const { position } = useSceneTransition(activeScene);
 
 
   return (
     <animated.group position={position.to((x, y, z) => [x, y, z])}>
       <CameraController activeScene={activeScene} />
-      <Presentation activeScene={activeScene} position={[0, 0, 0]} />
+      <Presentation activeScene={activeScene} position={[0, 0, 0]} onComposerReady={onComposerReady} />
       <ProjectsList activeScene={activeScene} position={[40, 1.4, 12]} setFocusIndex={setFocusIndex} />
       <SkillsList position={[80, 0, 0]} deviceType={deviceType} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
     </animated.group>

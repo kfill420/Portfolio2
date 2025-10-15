@@ -10,7 +10,7 @@ export function CameraController({ activeScene }: { activeScene: number }) {
 
   const previousScene = useRef(activeScene);
   const animationProgress = useRef(1);
-  const settlingProgress = useRef(1); // pour lisser après transition
+  const settlingProgress = useRef(1);
 
   useFrame((_state, delta) => {
     const isTransitioning = animationProgress.current < 1;

@@ -353,7 +353,7 @@ export function Leds({ instances }: LedsProps) {
   );
 }
 
-export function SafePostEffects({ activeScene }: { activeScene: number }) {
+export function SafePostEffects({ activeScene, onComposerReady }: { activeScene: number; onComposerReady?: () => void }) {
   const { camera, gl, size } = useThree();
   const [ready, setReady] = useState(false);
 
@@ -366,10 +366,13 @@ export function SafePostEffects({ activeScene }: { activeScene: number }) {
   useEffect(() => {
     let timeout: number;
     if (gl && gl.domElement && size.width > 0 && size.height > 0) {
-      timeout = window.setTimeout(() => setReady(true), 50);
+      timeout = window.setTimeout(() => {
+        setReady(true);
+        onComposerReady?.();
+      }, 50);
     }
     return () => clearTimeout(timeout);
-  }, [gl, size]);
+  }, [gl, size, onComposerReady]);
 
   const target = useMemo(() => {
     const clone = camera?.position?.clone?.();
@@ -397,7 +400,7 @@ export function SafePostEffects({ activeScene }: { activeScene: number }) {
 }
 
 
-export default function Presentation({ activeScene, position }: { activeScene: number, position?: [number, number, number]; activeCamera?: number }) {
+export default function Presentation({ activeScene, position, onComposerReady }: { activeScene: number, position?: [number, number, number]; activeCamera?: number; onComposerReady?: () => void }) {
   return (
     <group position={position || [0, 0, 0]}>
       {/* Lights */}
@@ -440,7 +443,7 @@ export default function Presentation({ activeScene, position }: { activeScene: n
 
         <>
           {/* Postprocessing */}
-          <SafePostEffects activeScene={activeScene} />
+          <SafePostEffects activeScene={activeScene} onComposerReady={onComposerReady} />
 
           {/* Camera movements */}
           {/* <CameraRig /> */}
