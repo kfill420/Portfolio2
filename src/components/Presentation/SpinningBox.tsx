@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { useCursor } from '@react-three/drei';
 import '@react-three/fiber';
 
-type SpinningBoxProps = JSX.IntrinsicElements['mesh'] & {
+type SpinningBoxProps = React.ComponentProps<'mesh'> & {
   scale: number;
 };
 

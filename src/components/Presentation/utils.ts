@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { extend, ReactThreeFiber } from '@react-three/fiber';
+import { extend } from '@react-three/fiber';
 
 class BentPlaneGeometry extends THREE.PlaneGeometry {
   constructor(radius: number, width: number, height: number, widthSegments = 1, heightSegments = 1) {
@@ -79,11 +79,3 @@ class MeshSineMaterial extends THREE.MeshBasicMaterial {
 
 extend({ BentPlaneGeometry, MeshSineMaterial });
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      bentPlaneGeometry: ReactThreeFiber.Object3DNode<BentPlaneGeometry, typeof BentPlaneGeometry>;
-      meshSineMaterial: ReactThreeFiber.Object3DNode<MeshSineMaterial, typeof MeshSineMaterial>;
-    }
-  }
-}
