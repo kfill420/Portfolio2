@@ -1,0 +1,219 @@
+@use '../../../styles/variables.scss' as *;
+
+.draw {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  width: 98vw;
+
+  @include media(tablet) {
+    width: 98vw;
+  }
+
+  @include media(desktop_xs) {
+    height: 26vh;
+  }
+
+  @include media(desktop_xl) {
+    height: 37vh;
+  }
+
+
+  svg {
+    #computer {
+      &_outer {
+        fill: $color6;
+      }
+
+      &_screen {
+        fill: $color1;
+      }
+    }
+
+    #la1c1 {
+      animation: rotate1 8s linear infinite;
+    }
+
+    @keyframes rotate1 {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    #la1c2 {
+      animation: rotate2 5s linear infinite;
+    }
+
+    @keyframes rotate2 {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(-360deg);
+      }
+    }
+
+    #computer2 {
+      &_screen {
+        fill: $color2;
+      }
+    }
+
+    #mobile {
+      &_screen {
+        fill: $color3;
+      }
+
+      &_button {
+        fill: $color1;
+      }
+    }
+
+    #cup {
+      &_tea {
+        fill: $color5
+      }
+
+      &_bag {
+        fill: $color2;
+      }
+    }
+
+    #popup1 {
+      &_back {
+        fill: $color3;
+      }
+
+      &_btn1 {
+        stroke: $color3;
+        fill: $color3;
+      }
+
+      &_btn2 {
+        stroke: $color2;
+        fill: $color2;
+      }
+
+      &_btn3 {
+        stroke: $color1;
+        fill: $color1;
+      }
+
+      &_line1 {
+        stroke: $color1;
+      }
+
+      &_line2 {
+        stroke: $color2;
+      }
+
+      &_line3 {
+        stroke: $color1;
+      }
+
+      &_line4 {
+        stroke: $color2;
+      }
+
+      &_line5 {
+        stroke: $color1;
+      }
+
+      &_line6 {
+        stroke: $color2;
+      }
+
+      &_line7 {
+        stroke: $color1;
+      }
+
+      &_line8 {
+        stroke: $color2;
+      }
+
+      &_line9 {
+        stroke: $color1;
+      }
+    }
+
+    #popup2 {
+      &_bar {
+        fill: $color3;
+      }
+
+      &_btn1 {
+        stroke: $color6;
+        fill: $color6;
+      }
+
+      &_btn2 {
+        stroke: $color2;
+        fill: $color2;
+      }
+
+      &_btn3 {
+        stroke: $color1;
+        fill: $color1;
+      }
+
+      &_graph1 {
+        stroke: $color2;
+        fill: $color2;
+      }
+
+      &_graph2 {
+        stroke: $color1;
+        fill: $color1;
+      }
+
+      &_graph3 {
+        stroke: $color3;
+        fill: $color3;
+      }
+    }
+
+    #book {
+
+      &_cover1,
+      &_cover2,
+      &_cover3 {
+        fill: $color1;
+      }
+    }
+
+    #popup3 {
+
+      &_outer,
+      &_pulse {
+        stroke: $color3;
+      }
+
+      &_background {
+        fill: $color2;
+      }
+    }
+
+    @include media(tablet) {
+      width: 75%;
+    }
+
+    @include media(desktop) {
+      width: 65%;
+    }
+
+  }
+}
+
+.la1c {
+  transform-origin: 375px 110px;
+}
+
+#QuantityThe {
+  transition: height 0.5s ease;
+}

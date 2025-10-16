@@ -1,0 +1,203 @@
+@use '../../../styles/variables.scss' as *;
+
+.cardInfoIB {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 4;
+
+  &_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 3;
+    transition: background-color 0.2s ease-in-out;
+
+    &-isVisible {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    z-index: 4;
+    border-radius: 10px;
+    opacity: 0;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+    &-isVisible {
+      opacity: 1;
+    }
+
+    @include media(tablet) {
+      width: 50vw;
+    }
+
+    @include media(desktop) {
+      width: 20vw;
+    }
+
+    &_title {
+      text-align: center;
+      color: $bgColor-primary;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+
+    &_subtitle {
+      margin-top: 1rem;
+      color: $bgColor-primary;
+    }
+
+    &_subsubtitle {
+      margin-top: 0.3rem;
+      color: $bgColor-primary;
+      margin-bottom: 0.5rem;
+    }
+
+    &_list {
+      list-style: none;
+
+      li::before {
+        content: "";
+        /* Crée un pseudo-élément */
+        display: inline-block;
+        width: 15px;
+        /* Définit la largeur de l'image */
+        height: 15px;
+        /* Définit la hauteur de l'image */
+        background-image: url('/public/icons/users.svg');
+        /* Utilise l'image SVG comme image de fond */
+        background-size: contain;
+        /* Assure que l'image de fond s'adapte à la taille du pseudo-élément */
+        background-repeat: no-repeat;
+        /* Empêche la répétition de l'image de fond */
+        margin-right: 10px;
+        /* Ajoute un espace entre l'image et le texte */
+      }
+
+      &_list1 {
+        list-style: none;
+
+        li::before {
+          content: "";
+          /* Crée un pseudo-élément */
+          display: inline-block;
+          width: 15px;
+          /* Définit la largeur de l'image */
+          height: 15px;
+          /* Définit la hauteur de l'image */
+          background-image: url('/icons/flag.svg');
+          /* Utilise l'image SVG comme image de fond */
+          background-size: contain;
+          /* Assure que l'image de fond s'adapte à la taille du pseudo-élément */
+          background-repeat: no-repeat;
+          /* Empêche la répétition de l'image de fond */
+          margin-right: 10px;
+          /* Ajoute un espace entre l'image et le texte */
+        }
+
+        &_list1 {
+          list-style: none;
+
+          li::before {
+            content: "";
+            /* Crée un pseudo-élément */
+            display: inline-block;
+            width: 15px;
+            /* Définit la largeur de l'image */
+            height: 15px;
+            /* Définit la hauteur de l'image */
+            background-image: url('/icons/eye.svg');
+            /* Utilise l'image SVG comme image de fond */
+            background-size: contain;
+            /* Assure que l'image de fond s'adapte à la taille du pseudo-élément */
+            background-repeat: no-repeat;
+            /* Empêche la répétition de l'image de fond */
+            margin-right: 10px;
+            /* Ajoute un espace entre l'image et le texte */
+          }
+        }
+      }
+
+      &_list2 {
+        list-style: none;
+
+        li::before {
+          content: "";
+          /* Crée un pseudo-élément */
+          display: inline-block;
+          width: 15px;
+          /* Définit la largeur de l'image */
+          height: 15px;
+          /* Définit la hauteur de l'image */
+          background-image: url('/icons/user-check.svg');
+          /* Utilise l'image SVG comme image de fond */
+          background-size: contain;
+          /* Assure que l'image de fond s'adapte à la taille du pseudo-élément */
+          background-repeat: no-repeat;
+          /* Empêche la répétition de l'image de fond */
+          margin-right: 10px;
+          /* Ajoute un espace entre l'image et le texte */
+        }
+
+        &_list1 {
+          list-style: none;
+
+          li::before {
+            content: "";
+            /* Crée un pseudo-élément */
+            display: inline-block;
+            width: 15px;
+            /* Définit la largeur de l'image */
+            height: 15px;
+            /* Définit la hauteur de l'image */
+            background-image: url('/icons/edit-3.svg');
+            /* Utilise l'image SVG comme image de fond */
+            background-size: contain;
+            /* Assure que l'image de fond s'adapte à la taille du pseudo-élément */
+            background-repeat: no-repeat;
+            /* Empêche la répétition de l'image de fond */
+            margin-right: 10px;
+            /* Ajoute un espace entre l'image et le texte */
+          }
+        }
+
+        &_list2 {
+          list-style: none;
+
+          li::before {
+            content: "";
+            /* Crée un pseudo-élément */
+            display: inline-block;
+            width: 15px;
+            /* Définit la largeur de l'image */
+            height: 15px;
+            /* Définit la hauteur de l'image */
+            background-image: url('/public/icons/eye.svg');
+            /* Utilise l'image SVG comme image de fond */
+            background-size: contain;
+            /* Assure que l'image de fond s'adapte à la taille du pseudo-élément */
+            background-repeat: no-repeat;
+            /* Empêche la répétition de l'image de fond */
+            margin-right: 10px;
+            /* Ajoute un espace entre l'image et le texte */
+          }
+        }
+      }
+    }
+
+    a {
+      margin-top: 1rem;
+    }
+  }
+}

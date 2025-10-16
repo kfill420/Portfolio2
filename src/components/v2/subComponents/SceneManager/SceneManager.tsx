@@ -2,7 +2,7 @@ import { animated } from "@react-spring/three";
 import ProjectsList from "../../ProjectsList/ProjectsList";
 import SkillsList from "../../SkillsList/SkillsList";
 import Presentation from "../../Presentation/Presentation";
-import { useSceneTransition } from "../../../hooks/useSceneTransition.ts";
+import { useSceneTransition } from "../../../../hooks/useSceneTransition.ts";
 import { CameraController } from "../CameraController/CameraController.tsx";
 
 interface SceneManagerProps {

@@ -1,0 +1,62 @@
+@use '../../../styles/variables.scss' as *;
+
+.skills {
+    position: relative;
+    background: $bgColor-dark;
+    padding: 0 0 1vh 0;
+
+    &_container {
+        margin: 0;
+        padding: 3% 0 3% 0;
+
+        @include media(tablet) {
+            padding: 3% 0% 3% 0;
+        }
+
+        @include media(desktop) {
+            padding: 3% 0 3% 0;
+        }
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &_title {
+            text-align: center;
+            margin: 5% 5% 5% 5%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+
+            @include media(tablet) {
+                font-size: 2.5rem;
+                padding: 0 10% 0 10%;
+                margin: 0% 0% 1% 0%
+            }
+
+            @include media(desktop) {
+                font-size: 2.5rem;
+                margin: 1% 0% 10% 0%;
+            }
+        }
+
+        &_text {
+            font-size: 1rem;
+            font-weight: 400;
+            color: white;
+            margin: 0 5% 4% 5%;
+            text-align: center;
+
+            @include media(tablet) {
+                font-size: 1.5rem;
+                padding: 0 15% 0 15%;
+            }
+
+            @include media(desktop) {
+                font-size: 1.8rem;
+                padding: 0 1.5rem 0% 1.5rem;
+            }
+        }
+    }
+}

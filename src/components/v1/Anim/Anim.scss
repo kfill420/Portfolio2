@@ -1,0 +1,67 @@
+@use '../../../styles/variables.scss' as *;
+
+.animation1 {
+  transform: translateY(4vh);
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.iv1 {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+
+.a2 {
+  transform: scale(0);
+  transition: all 0.6s ease-in-out;
+  opacity: 0;
+}
+
+.iv2 {
+  transform: scale(1);
+  opacity: 1;
+}
+
+
+.a3t1 {
+  animation: a3 0.4s ease-in-out 0.1s forwards;
+  transform: scale(0);
+  transform: translateX(350px);
+  opacity: 0;
+}
+
+.a3t2 {
+  animation: a3 0.4s ease-in-out 0.2s forwards;
+  transform: scale(0);
+  transform: translateX(350px);
+  opacity: 0;
+}
+
+.a3t3 {
+  animation: a3 0.4s ease-in-out 0.3s forwards;
+  transform: scale(0);
+  transform: translateX(350px);
+  opacity: 0;
+}
+
+.a3t4 {
+  animation: a3 0.4s ease-in-out 0.4s forwards;
+  transform: scale(0);
+  transform: translateX(350px);
+  opacity: 0;
+}
+
+@keyframes a3 {
+  0% {
+    transform: scale(0);
+    transform: translateX(350px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
