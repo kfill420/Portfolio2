@@ -1,0 +1,154 @@
+@use '../../../styles/variables.scss' as *;
+
+.skills_container2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, $bgColor-dark 0%, $bgColor-dark 5%, white 6%, white 100%);
+  margin-top: -1px;
+  padding: 0;
+
+  @include media(tablet_mini) {
+    background: linear-gradient(180deg, $bgColor-dark 0%, $bgColor-dark 11%, white 12%, white 100%);
+  }
+
+  .skills_table {
+    position: relative;
+    text-align: center;
+    justify-content: space-between;
+
+    @include media(tablet_desktop) {
+      background-color: white;
+      box-shadow: -5px 5px 15px $color3;
+      border-radius: 15px;
+      border-bottom: none
+    }
+
+    border-bottom: $bgColor-dark-withAlpha 1px solid;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @include media(tablet_xl) {
+      top: 85%;
+      flex-direction: row;
+      gap: 0;
+    }
+
+    @include media(desktop) {
+      flex-direction: row;
+      top: 70%;
+      width: 80%;
+      gap: 0;
+    }
+
+    .skills_table_frontend,
+    .skills_table_backend,
+    .skills_table_gestion {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: solid 1px $bgColor-dark-withAlpha;
+      border-top: solid 1px $bgColor-dark-withAlpha;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: -5px 5px 15px $color3;
+      width: 100%;
+
+      @include media(desktop) {
+        border-right: solid 1px $bgColor-dark-withAlpha;
+        background-color: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: none;
+        border-top: none;
+        width: 33%;
+      }
+
+      @include media(tablet_xl) {
+        border-right: solid 1px $bgColor-dark-withAlpha;
+        background-color: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: none;
+        border-top: none;
+        width: 33%;
+      }
+    }
+
+    .skills_table_gestion {
+      border-right: none
+    }
+
+    .animation1 {
+      display: flex;
+      justify-content: center;
+      width: 120%;
+    }
+
+    &_logo {
+      width: 30%;
+      text-align: center;
+      margin-top: 10%;
+
+      @include media(desktop) {
+        width: 20%;
+      }
+    }
+
+    &_title {
+      color: $bgColor-primary;
+      font-size: 1.8rem;
+      margin: 2% 0 5% 0;
+    }
+
+    &_list {
+      display: flex;
+      ;
+      flex-wrap: wrap;
+      font-weight: 500;
+      padding: 0 1rem;
+      width: 100%;
+      margin-bottom: 5%;
+
+      &_box {
+        font-size: 1rem;
+        color: $bgColor-dark;
+        font-weight: 500;
+        background-color: $color2;
+        margin: 2%;
+        border-radius: 10px;
+        box-shadow: 0px 10px 14px 0px rgba(0, 0, 0, 0.15);
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
+
+        &:hover {
+          background-color: $color1;
+          color: white;
+          box-shadow: 0 0.5em 0.5em -0.4em $color1;
+          transform: translateY(-0.25em);
+        }
+
+        @include media(desktop) {
+          font-size: 1.2rem;
+        }
+
+        @include media(tablet_xs) {
+          padding: 0.5rem 0;
+        }
+
+        @include media(tablet_xl) {
+          padding: 0.5rem 0;
+        }
+
+        @include media(desktop) {
+          padding: 0.5rem 0;
+        }
+
+        &_text {
+          color: $bgColor-primary;
+        }
+      }
+    }
+  }
+}

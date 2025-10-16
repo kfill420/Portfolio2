@@ -1,0 +1,139 @@
+@use '../../../styles/variables.scss' as *;
+
+.contact {
+    padding-top: 4%;
+    padding-bottom: 5%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 0;
+
+    &_title {
+        font-size: 1.8rem;
+        color: $bgColor-primary;
+        font-weight: 700;
+
+        @include media(tablet) {
+            font-size: 2.5rem;
+        }
+
+        @include media(desktop) {
+            font-size: 2.5rem;
+        }
+    }
+
+    &_form {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 85%;
+
+        @include media(desktop) {
+            width: 65%;
+        }
+
+        &_user,
+        &_mail,
+        &_phone,
+        &_text,
+        &_rgpd {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            &_logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $bgColor-lightGrey;
+                color: black;
+                width: 9%;
+                border-radius: 3px 0 0 3px;
+                transition: background-color 0.4s ease-in-out;
+
+                &_feather {
+                    width: 50%;
+                }
+
+                &-valide {
+                    background-color: $bgColor-Green;
+                }
+            }
+
+            &_input {
+                border: none;
+                border-bottom: solid 2px $bgColor-lightGrey;
+                border-top: solid 2px $bgColor-lightGrey;
+                width: 80%;
+                padding: 0.5rem 0.8rem;
+                font-size: 15px;
+                z-index: 0;
+                background-color: white;
+            }
+
+            &_required {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $bgColor-lightGrey;
+                width: 9%;
+                border-radius: 0 3px 3px 0;
+
+            }
+        }
+
+        &_rgpd {
+            justify-content: flex-start;
+            align-items: flex-start;
+            color: black;
+
+            @include media(desktop) {
+                margin-left: 0.5rem;
+            }
+
+            input {
+                margin: 0 1rem 0 0.3rem;
+                width: 70px;
+                height: 70px;
+                border: solid 2px $bgColor-lightGrey;
+                background-color: $bgColor-lightGrey;
+
+                @include media(tablet_mini) {
+                    width: 20px;
+                    height: 20px;
+                    transform: translateY(0.2rem);
+                }
+
+                @include media(desktop) {
+                    width: 15px;
+                    height: 15px;
+                    transform: translateY(0.3rem);
+                }
+            }
+
+            label {
+                margin: 0 1rem 0 0.2rem;
+            }
+        }
+
+        &_submit {
+            background-color: $bgColor-primary;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 0;
+            color: white;
+            width: 100%;
+            transition: opacity 0.2s ease-in-out;
+            opacity: 0.5;
+
+            @include media(desktop) {}
+
+            &-isValid {
+                opacity: 1;
+            }
+        }
+    }
+}

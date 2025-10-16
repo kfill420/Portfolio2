@@ -1,0 +1,66 @@
+@use '../../../styles/variables.scss' as *;
+
+.networks {
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  top: 0;
+  right: 25%;
+  width: 50%;
+  margin-top: 0.5rem;
+
+  @include media(desktop) {
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  &_container {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    &-expended {
+      background-color: $bgColor-primary;
+    }
+  }
+
+  &_item {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    text-decoration: none;
+    color: $bgColor-primary;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    &-expended {
+      color: $bgColor-White;
+    }
+
+    &_content {
+      position: absolute;
+      transform: translateY(2rem);
+      overflow: hidden;
+      width: 0;
+      height: 1.8rem;
+      transition: all 0.2s ease-in-out;
+      background-color: $bgColor-primary;
+      border-radius: 5px;
+      padding: 0.2rem 0 0.2rem 0;
+      color: $bgColor-White;
+
+      &-expended {
+        width: 16.5ch;
+        padding: 0.2rem 0 0.2rem 0.4rem;
+      }
+    }
+  }
+}

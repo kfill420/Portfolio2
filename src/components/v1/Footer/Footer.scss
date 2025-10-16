@@ -1,0 +1,83 @@
+@use '../../../styles/variables.scss' as *;
+
+.footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @include media('tablet_mini') {
+    width: 100vw;
+  }
+
+  &_part1 {
+    display: flex;
+    flex-direction: column;
+    background-color: $bgColor-darkGey;
+    padding: 1rem 1rem;
+
+    @include media('tablet_mini') {
+      flex-direction: row;
+      justify-content: space-evenly;
+      gap: 2rem;
+    }
+
+    &_p1 {
+      @include media('tablet') {
+        margin-left: 7.5%;
+      }
+
+      @include media('desktop') {
+        margin-left: 17.5%;
+      }
+    }
+
+    &_p2 {
+      @include media('tablet') {
+        margin-right: 7.5%;
+      }
+
+      @include media('desktop') {
+        display: flex;
+        flex-direction: column;
+        margin-right: 17.5%;
+        min-width: 15%;
+      }
+    }
+  }
+
+  &_title {
+    color: $textColor-colorWhite;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 0.3rem;
+  }
+
+  &_description {
+    color: $color5;
+    margin-bottom: 1rem;
+  }
+
+  &_part2 {
+    background-color: $bgColor-darkGey2;
+    padding: 1rem 1rem;
+
+    @include media('tablet_mini') {
+      display: flex;
+      justify-content: space-evenly;
+      gap: 1rem;
+    }
+  }
+
+  &_mentions {
+    color: $color5;
+    letter-spacing: 0.2rem;
+    font-size: 0.7rem;
+  }
+
+  &_copyright {
+    color: $color5;
+    letter-spacing: 0.2rem;
+    font-size: 0.7rem;
+  }
+}

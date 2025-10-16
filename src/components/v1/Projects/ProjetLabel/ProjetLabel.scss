@@ -1,0 +1,141 @@
+@use '../../../../styles/variables.scss';
+
+.technos {
+  position: relative;
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  overflow: hidden;
+  animation: technosAnim 30s linear infinite;
+
+  @keyframes technosAnim {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  &_item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
+
+    &_icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
+      width: 32px;
+      height: 32px;
+
+      &_svg {
+        width: 100%;
+      }
+
+      &-react {
+        background-color: #61DAFB;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &-vue {
+        background-color: #01B57B;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &-typescript {
+        background-color: white;
+      }
+
+      &-psql {
+        background-color: white;
+      }
+
+      &-node {
+        background-color: #58A149;
+        padding: 0.2rem;
+      }
+
+      &-redux {
+        background-color: #7248B5;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &-sequelize {
+        background-color: #36466F;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &-bulma {
+        background-color: #08D2B4;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &_git {
+        background-color: #DD4C35;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &-eslint {
+        background-color: #5138C5;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &-prettier {
+        background-color: #253239;
+
+        &_svg {
+          width: 80%;
+        }
+      }
+
+      &-scrum {
+        background-color: #025a1f;
+      }
+
+    }
+
+    &_text {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      color: white;
+      font-weight: 500;
+      background-color: #1C2125;
+      padding: 0 1rem;
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+  }
+}

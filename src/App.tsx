@@ -1,27 +1,28 @@
-// import React, { useRef, useEffect, useState } from 'react';
-// import { Provider } from 'react-redux';
-// import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
-// import { useSpring, animated } from '@react-spring/three';
-// import './Apps.scss';
-// import store from './store';
-
-import { Canvas, useThree } from "@react-three/fiber";
-import { useEffect, useState } from "react";
-import { Routes, useLocation, useNavigate } from "react-router-dom";
-import ProjectsListUI from "./components/ProjectsList/ProjectsListUI";
-import { SceneManager } from "./components/subComponents/SceneManager/SceneManager";
-import { useDeviceType } from "./hooks/useDeviceType";
-import { Provider } from "react-redux";
-import store from './store';
-import { RedirectWithParam } from "./utils/redirectWithParam";
-import { BrowserRouter as Router, Route, Navigate } from 'react-router-dom';
-import redirections from "./data/redirections.json";
-import SkillsListUI from "./components/SkillsList/SkillsListUI";
-import * as THREE from "three";
-import Navigat from "./components/subComponents/Navigator/Navigator";
 import './App.css';
 import { Html, useProgress } from "@react-three/drei";
-// import { Test } from './components/Test';
+import { Canvas, useThree } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { BrowserRouter as Router, Route, Navigate } from 'react-router-dom';
+import { Provider } from "react-redux";
+import store from './store';
+import { Routes, useLocation, useNavigate } from "react-router-dom";
+import ProjectsListUI from "./components/v2/ProjectsList/ProjectsListUI";
+import { SceneManager } from "./components/v2/subComponents/SceneManager/SceneManager";
+import SkillsListUI from "./components/v2/SkillsList/SkillsListUI";
+import Navigat from "./components/v2/subComponents/Navigator/Navigator";
+import { useDeviceType } from "./hooks/useDeviceType";
+import { RedirectWithParam } from "./utils/redirectWithParam";
+import redirections from "./data/redirections.json";
+import Presentation from "./components/v1/Presentation/Presentation";
+import Draw from "./components/v1/Draw/Draw";
+import Skills from "./components/v1/Skills/Skills";
+import PresentationText from "./components/v1/PresentationText/PresentationText";
+import Projects from "./components/v1/Projects/Projects";
+import Contact from "./components/v1/Contact/Contact";
+import Footer from "./components/v1/Footer/Footer";
+import Networks from "./components/v1/Networks/Networks";
+
 
 function Loader() {
   const { progress } = useProgress();
@@ -33,7 +34,9 @@ function Loader() {
 }
 
 
-function Home() {
+function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObject<HTMLDivElement | null>, scrollToTarget: () => void }) {
+  const [WebsiteVersion, setWebsiteVersion] = useState(1);
+
   const [sceneIndex, setSceneIndex] = useState(0); // 0: Presentation, 1: ProjectsList, 2: SkillsList
   const location = useLocation();
   const navigate = useNavigate();
@@ -69,44 +72,57 @@ function Home() {
 
   return (
     <>
-      <div className="app" style={{ overflow: "hidden", height: "100vh", width: "100vw", scrollbarWidth: "none", visibility: composerReady ? 'visible' : 'hidden' }}>
+      {
+        WebsiteVersion === 2 && (
+          <div className="app" style={{ overflow: "hidden", height: "100vh", width: "100vw", scrollbarWidth: "none", visibility: composerReady ? 'visible' : 'hidden' }}>
 
-        <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} />
+            <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} />
 
-        <Canvas shadows dpr={[1, 1.5]}>
-          {!composerReady && <Loader />}
-          <SceneManager
-            activeScene={sceneIndex}
-            deviceType={deviceType}
-            selectedTech={selectedTech}
-            setSelectedTech={setSelectedTech}
-            organizedView={organizedView}
-            radius={radius}
-            speed={speed}
-            setFocusIndex={setFocusIndex}
-            onComposerReady={() => setComposerReady(true)}
-          />
-        </Canvas>
+            <Canvas shadows dpr={[1, 1.5]}>
+              {!composerReady && <Loader />}
+              <SceneManager
+                activeScene={sceneIndex}
+                deviceType={deviceType}
+                selectedTech={selectedTech}
+                setSelectedTech={setSelectedTech}
+                organizedView={organizedView}
+                radius={radius}
+                speed={speed}
+                setFocusIndex={setFocusIndex}
+                onComposerReady={() => setComposerReady(true)}
+              />
+            </Canvas>
 
-        {
+            {
 
-          <ProjectsListUI activeScene={sceneIndex} focusIndex={focusIndex} />
-        }
+              <ProjectsListUI activeScene={sceneIndex} focusIndex={focusIndex} />
+            }
 
-        {
-          <SkillsListUI activeScene={sceneIndex} deviceType={deviceType} setOrganizedView={setOrganizedView} radius={radius} setRadius={setRadius} speed={speed} setSpeed={setSpeed} parameterIsOpen={parameterIsOpen} setParameterIsOpen={setParameterIsOpen} />
-        }
+            {
+              <SkillsListUI activeScene={sceneIndex} deviceType={deviceType} setOrganizedView={setOrganizedView} radius={radius} setRadius={setRadius} speed={speed} setSpeed={setSpeed} parameterIsOpen={parameterIsOpen} setParameterIsOpen={setParameterIsOpen} />
+            }
 
-        {/* <Presentation enterprise={data} />
-      <Draw />
-      <Skills />
-      <PresentationText />
-      <Projects />
-      <Contact contactTarget={contactTarget} />
-      <Footer /> */}
+          </div >
+        )
+      }
 
-        {/* <Networks scrollToTarget={scrollToTarget} /> */}
-      </div >
+      {
+        WebsiteVersion === 1 && (
+          <div style={{ overflow: "hidden", backgroundColor: "white" }}>
+            <Presentation enterprise={data} />
+            <Draw />
+            <Skills />
+            <PresentationText />
+            <Projects />
+            <Contact contactTarget={contactTarget} />
+            <Footer />
+            <Networks scrollToTarget={scrollToTarget} />
+          </div>
+        )
+      }
+
+
+
     </>
   )
 }
@@ -123,6 +139,13 @@ export function BackgroundColor({ color }: { color: THREE.ColorRepresentation })
 
 
 export default function App() {
+  const contactTarget = useRef<HTMLDivElement>(null);
+
+  const scrollToTarget = () => {
+    if (contactTarget.current) {
+      contactTarget.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <Provider store={store}>
@@ -134,7 +157,7 @@ export default function App() {
                 <Route key={source} path={source} element={<RedirectWithParam data={destination} />} />
               ))
             }
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home contactTarget={contactTarget ?? null} scrollToTarget={scrollToTarget} />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

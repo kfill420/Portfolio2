@@ -1,0 +1,173 @@
+@use '../../../styles/variables.scss' as *;
+
+.presentation {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  padding: 0;
+  margin-top: 1rem;
+  justify-content: space-around;
+
+  @include media(mobile) {
+    margin: 2rem;
+  }
+
+  @include media(tablet) {
+    height: calc(70vh - 1rem);
+  }
+
+  @include media(desktop_xs) {
+    height: calc(74vh - 1rem);
+  }
+
+  @include media(desktop_xl) {
+    height: calc(63vh - 1rem);
+  }
+
+  @include media(landscape) {
+    margin-top: 2rem;
+    height: calc(100%);
+  }
+
+
+  &_title {
+    text-align: center;
+    margin: 0 0 3% 0;
+    color: $bgColor-primary;
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+
+  &_description {
+    text-align: center;
+    color: $bgColor-primary;
+    font-size: 1.5rem;
+    margin-bottom: 10%;
+    font-weight: 100;
+  }
+
+  &_destination {
+
+    &_buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      @include media(mobile) {
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      @include media(tablet_mini) {
+        flex-direction: row;
+      }
+
+      &_btn {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background-color: white;
+        color: $bgColor-dark;
+        border: none;
+        border: 2px solid $bgColor-dark;
+        padding: 0.4rem 0.6rem;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        box-shadow: -5px 5px 15px 1px #9e9c9c;
+      }
+    }
+  }
+
+  &_imgProfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &_picture {
+      width: 30vw;
+      border-radius: 20%;
+      margin-bottom: 10%;
+      box-shadow: -5px 5px 15px #1F1F1F;
+      transition: filter 0.3s, transform 0.3s;
+      filter: contrast(1) brightness(1);
+      transform: scale(1);
+
+      &:hover {
+        filter: contrast(1.2) brightness(0.9);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  @include media(tablet) {
+    &_title {
+      margin: 0 0 1% 0;
+      font-size: 2.5rem;
+    }
+
+    &_description {
+      font-size: 2.2rem;
+      margin-bottom: 8%;
+    }
+
+    &_imgProfil {
+      width: 20vw;
+      min-width: 150px;
+      margin-bottom: 8%;
+    }
+  }
+
+  @include media(desktop_xs) {
+    &_title {
+      margin: 1%;
+      font-size: 3rem;
+      white-space: nowrap;
+    }
+
+    &_description {
+      font-size: 2.5rem;
+      margin-bottom: 4%;
+    }
+
+    &_imgProfil {
+      width: 12vw;
+      min-width: 150px;
+      margin-bottom: 25%;
+    }
+  }
+
+  @include media(desktop_xl) {
+    &_title {
+      margin: 1%;
+      font-size: 3rem;
+      white-space: nowrap;
+    }
+
+    &_description {
+      font-size: 2.5rem;
+      margin-bottom: 4%;
+    }
+
+    &_imgProfil {
+      width: 12vw;
+      min-width: 150px;
+      margin-bottom: 20%;
+    }
+  }
+}
+
+@keyframes typing {
+  to {
+    width: 0
+  }
+}
+
+@keyframes caret {
+  50% {
+    color: transparent
+  }
+}
