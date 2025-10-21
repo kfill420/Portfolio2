@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://alexis-vignot.vercel.app/sitemap.xml
+Sitemap: https://alexis-vignot.fr/sitemap.xml
