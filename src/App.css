@@ -1,1 +1,17 @@
 #root {}
+
+.versionSetter {
+  z-index: 20;
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  background-color: orange;
+  padding: 0.8rem 0.8rem;
+  font-size: 1rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
