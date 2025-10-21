@@ -28,9 +28,21 @@ export function SceneManager({ activeScene, deviceType, selectedTech, setSelecte
   return (
     <animated.group position={position.to((x, y, z) => [x, y, z])}>
       <CameraController activeScene={activeScene} />
-      <Presentation activeScene={activeScene} position={[0, 0, 0]} onComposerReady={onComposerReady} />
-      <ProjectsList activeScene={activeScene} position={[40, 1.4, 12]} setFocusIndex={setFocusIndex} />
-      <SkillsList position={[80, 0, 0]} deviceType={deviceType} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
+      {
+        activeScene === 0 && (
+          <Presentation activeScene={activeScene} position={[0, 0, 0]} onComposerReady={onComposerReady} />
+        )
+      }
+      {
+        activeScene === 1 && (
+          <ProjectsList activeScene={activeScene} position={[40, 1.4, 12]} setFocusIndex={setFocusIndex} />
+        )
+      }
+      {
+        activeScene === 2 && (
+          <SkillsList position={[80, 0, 0]} deviceType={deviceType} selectedTech={selectedTech} setSelectedTech={setSelectedTech} organizedView={organizedView} radius={radius} speed={speed} />
+        )
+      }
     </animated.group>
   );
 }
