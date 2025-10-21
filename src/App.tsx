@@ -70,13 +70,17 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
     }
   }, [data]);
 
+  const handleVersionToggle = () => {
+    setWebsiteVersion(WebsiteVersion === 1 ? 2 : 1);
+  };
+
   return (
     <>
       {
         WebsiteVersion === 2 && (
           <div className="app" style={{ overflow: "hidden", height: "100vh", width: "100vw", scrollbarWidth: "none", visibility: composerReady ? 'visible' : 'hidden' }}>
 
-            <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} />
+            <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} handleVersionToggle={handleVersionToggle} />
 
             <Canvas shadows dpr={[1, 1.5]}>
               {!composerReady && <Loader />}
@@ -109,6 +113,7 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
       {
         WebsiteVersion === 1 && (
           <div style={{ overflow: "hidden", backgroundColor: "white" }}>
+            <button className="versionSetter" onClick={handleVersionToggle}>{WebsiteVersion === 1 ? "3D" : "2D"}</button>
             <Presentation enterprise={data} />
             <Draw />
             <Skills />
