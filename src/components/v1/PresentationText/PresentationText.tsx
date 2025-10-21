@@ -61,6 +61,7 @@ function PresentationText() {
             <Label>API Rest</Label>
             <Label>Web Socket</Label>
             <Label>Thunder Client / Postman</Label>
+            <Label>Oracle Cloud</Label>
           </div>
         </div>
         <div className="skills_table_gestion">
