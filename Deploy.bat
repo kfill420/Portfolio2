@@ -1,3 +1,3 @@
 @echo off
-"D:\Programes\Git\bin\bash.exe" -c "cd '/d/alexi/Documents/Dev/Web/PortfolioTest' && ./deploy.sh"
+"D:\Programmes\Git\bin\bash.exe" -c "cd '/d/Utilisateur/Documents/Projets/Web/Portfolio2' && ./deploy.sh"
 pause

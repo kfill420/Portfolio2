@@ -113,7 +113,11 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
       {
         WebsiteVersion === 1 && (
           <div style={{ overflow: "hidden", backgroundColor: "white" }}>
-            <button className="versionSetter" onClick={handleVersionToggle}>{WebsiteVersion === 1 ? "3D" : "2D"}</button>
+            {
+              deviceType.device === "desktop" &&
+              <button className="versionSetter" onClick={handleVersionToggle}>{WebsiteVersion === 1 ? "3D" : "2D"}</button>
+            }
+            
             <Presentation enterprise={data} />
             <Draw />
             <Skills />
@@ -125,8 +129,6 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
           </div>
         )
       }
-
-
 
     </>
   )
