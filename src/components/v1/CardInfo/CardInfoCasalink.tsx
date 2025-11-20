@@ -44,7 +44,7 @@ function CardInfoCasalink() {
           même foyer en offrant une plateforme centralisée pour organiser et
           partager des informations importantes.</p>
         <video controls>
-          <source src="Casalink.mp4" type="video/mp4" />
+          <source src="videos/Casalink.mp4" type="video/mp4" />
           Votre navigateur ne supporte pas la vidéo.
         </video>
 

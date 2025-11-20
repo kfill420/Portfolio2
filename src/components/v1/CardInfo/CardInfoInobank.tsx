@@ -37,7 +37,7 @@ function CardInfoCasalink() {
       <div className={isVisible ? "cardInfoIB_content cardInfoIB_content-isVisible" : "cardInfoIB_content"}>
 
         <video controls>
-          <source src="inobank.webm" type="video/webm" />
+          <source src="videos/inobank.webm" type="video/webm" />
           Votre navigateur ne supporte pas la vidéo.
         </video>
 
