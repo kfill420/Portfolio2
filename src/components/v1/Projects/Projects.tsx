@@ -55,6 +55,13 @@ function Projects() {
           technos={["Vue.js", "Typescript", "Postgres SQL", "Node.js", "Express", "Sequelize", "Bulma", "Git", "Eslint", "Prettier"]}
         />
         <Card
+          title="ResidenceAlexandre"
+          description="React Typescript"
+          img="images/project7.webp"
+          url="https://residence-alexandre.vercel.app"
+          info={false}
+        />
+        <Card
           title="GithubSearcher"
           description="React API Github"
           img="images/project2.webp"

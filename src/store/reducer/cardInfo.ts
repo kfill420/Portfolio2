@@ -8,6 +8,7 @@ interface CardInfoStateI {
   Spiecraft: boolean;
   GithubSearcher: boolean;
   Todolist: boolean;
+  ResidenceAlexandre: boolean;
 }
 
 export const initialState: CardInfoStateI = {
@@ -16,7 +17,8 @@ export const initialState: CardInfoStateI = {
   Casalink: false,
   Spiecraft: false,
   GithubSearcher: false,
-  Todolist: false
+  Todolist: false,
+  ResidenceAlexandre: false
 };
 
 export type ProjetKeys = keyof CardInfoStateI;
