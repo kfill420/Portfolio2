@@ -1,73 +1,109 @@
-# React + TypeScript + Vite
+# Portfolio – Alexis Vignot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfolio personnel développé pour présenter mes projets, mes compétences et mon parcours dans le développement web, l’architecture technique et la création d’expériences interactives. Le site met en avant une interface moderne, animée et immersive grâce à l’utilisation de Three.js et de l’écosystème React Three Fiber.
 
-Currently, two official plugins are available:
+## Objectif du projet
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Ce portfolio a été conçu pour :
 
-## React Compiler
+- présenter mes réalisations de manière claire et professionnelle ;
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- offrir une expérience visuelle fluide et moderne ;
 
-## Expanding the ESLint configuration
+- démontrer mes compétences en React, 3D, animations et architecture front-end ;
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- disposer d’un site performant, sécurisé et déployé dans un environnement cloud robuste.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Stack technique
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Le projet repose sur une stack moderne orientée performance et modularité :
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- React 19 — interface utilisateur
+
+- React Three Fiber / Drei / Postprocessing — rendu 3D et animations
+
+- Three.js — moteur 3D
+
+- Redux Toolkit — gestion d’état
+
+- React Router DOM — navigation
+
+- Vite — développement et build ultra rapide
+
+- TypeScript — typage strict et fiabilité
+
+- Sass — styles modulaires
+
+- ESLint + TypeScript ESLint — qualité du code
+
+## Infrastructure et déploiement
+
+Le portfolio est hébergé sur Oracle Cloud Infrastructure (OCI), dans un environnement conteneurisé et optimisé pour la production.
+
+### Docker
+L’application est buildée puis intégrée dans un conteneur Docker, permettant :
+
+- un environnement stable et reproductible ;
+
+- des mises à jour rapides ;
+
+- une isolation complète du service.
+
+### Nginx
+
+Un serveur Nginx est utilisé comme reverse proxy pour :
+
+- servir les fichiers statiques du build Vite ;
+
+- gérer le routage d’une Single Page Application (SPA) ;
+
+- optimiser les performances via le caching ;
+
+- sécuriser l’accès via HTTPS (si configuré).
+
+### Oracle Cloud
+
+L’instance OCI assure :
+
+- l’hébergement du conteneur Docker ;
+
+- la configuration réseau (firewall, ports, DNS) ;
+
+- la disponibilité 24/7 du site.
+
+Cette architecture garantit un déploiement fiable, performant et facilement maintenable.
+
+## Scripts disponibles
+
+```json
+"dev": "vite",
+"build": "tsc -b && vite build",
+"lint": "eslint .",
+"preview": "vite preview"
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Structure générale du projet
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+  components/     # Composants UI
+  pages/          # Pages du portfolio
+  three/          # Scènes, modèles et animations 3D
+  store/          # Redux Toolkit
+  styles/         # SCSS
+  App.tsx
+  main.tsx
+```
+
+## Fonctionnalités principales
+
+- Interface moderne et animée
+
+- Scènes 3D interactives
+
+- Navigation fluide en SPA
+
+- Architecture front-end propre et modulaire
+
+- Déploiement cloud sécurisé et conteneurisé
+
