@@ -16,10 +16,10 @@ interface CardProps {
   bestProject?: boolean;
   info?: boolean;
   technos?: string[];
-  github?: string;
+  // github?: string;
 }
 
-function Card({ title, description, img, url, inProgress, bestProject, info, technos, github }: CardProps) {
+function Card({ title, description, img, url, inProgress, bestProject, info, technos }: CardProps) {
   const [btnCliquable, setBtnCliquable] = useState(false);
   const dispatch = useAppDispatch();
   const projet = title;
