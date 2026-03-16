@@ -30,9 +30,15 @@ const cardInfoSlice = createSlice({
     actionCardInfoVisible(state, action: PayloadAction<{ projet: ProjetKeys }>) {
       const { projet } = action.payload;
       state[projet] = !state[projet];
+      console.log(state[projet])
+    },
+    actionSetCardInfoVisible(state, action: PayloadAction<{ projet: ProjetKeys }>) {
+      const { projet } = action.payload;
+      state[projet] = true;
+      console.log(state[projet])
     },
   },
 });
 
-export const { actionCardInfoVisible } = cardInfoSlice.actions;
+export const { actionCardInfoVisible, actionSetCardInfoVisible } = cardInfoSlice.actions;
 export default cardInfoSlice.reducer;

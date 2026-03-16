@@ -4,7 +4,7 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { BrowserRouter as Router, Route, Navigate } from 'react-router-dom';
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from './store';
 import { Routes, useLocation, useNavigate } from "react-router-dom";
 import ProjectsListUI from "./components/v2/ProjectsList/ProjectsListUI";
@@ -22,6 +22,8 @@ import Projects from "./components/v1/Projects/Projects";
 import Contact from "./components/v1/Contact/Contact";
 import Footer from "./components/v1/Footer/Footer";
 import Networks from "./components/v1/Networks/Networks";
+import { actionSetCardInfoVisible } from './store/reducer/cardInfo';
+import { useAppSelector } from './hooks/redux';
 
 
 function Loader() {
@@ -40,8 +42,12 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
   const [sceneIndex, setSceneIndex] = useState(0); // 0: Presentation, 1: ProjectsList, 2: SkillsList
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const params = new URLSearchParams(location.search);
   const data = params.get('data');
+  const project = params.get('project');
+
+  const isOpen = useAppSelector(state => state.cardInfo.InoBank);
 
   //Presentatin States
   const [composerReady, setComposerReady] = useState(false);
@@ -56,6 +62,12 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
   const [radius, setRadius] = useState(deviceType.device === 'desktop' ? 1.5 : 1);
   const [speed, setSpeed] = useState(0.3);
   const [parameterIsOpen, setParameterIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(project);
+    if (project === "InoBank" && !isOpen) dispatch(actionSetCardInfoVisible({ projet: "InoBank" }))
+  }, [project]);
+
 
   useEffect(() => {
     const allowedDestinations = redirections.map(({ destination }) =>
