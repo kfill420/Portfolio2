@@ -37,7 +37,7 @@ function Projects() {
           bestProject={true}
           info={false}
           technos={["React", "Typescript", "Postgres SQL", "Node.js", "Redux", "Express", "Git", "Eslint", "Prettier", "Scrum"]}
-          github="https://github.com/kfill420/DTK"
+          // github="https://github.com/kfill420/DTK"
         />
         <Card
           title="Casalink"
