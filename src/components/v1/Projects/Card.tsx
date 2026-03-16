@@ -16,9 +16,10 @@ interface CardProps {
   bestProject?: boolean;
   info?: boolean;
   technos?: string[];
+  github?: string;
 }
 
-function Card({ title, description, img, url, inProgress, bestProject, info, technos }: CardProps) {
+function Card({ title, description, img, url, inProgress, bestProject, info, technos, github }: CardProps) {
   const [btnCliquable, setBtnCliquable] = useState(false);
   const dispatch = useAppDispatch();
   const projet = title;
@@ -40,6 +41,16 @@ function Card({ title, description, img, url, inProgress, bestProject, info, tec
           {inProgress && <span className="card_label">En construction</span>}
           {bestProject && <Star className="card_star"></Star>}
           {technos && technos.length > 0 && ProjetLabel({ technos })}
+          {/* {
+              github && 
+              <button
+                  type="button"
+                  className="card_content_github"
+                  onClick={() => btnCliquable && window.open(github, '_blank')}
+                >
+                  git
+                </button>
+            } */}
           <div className="card_content">
             <h3 className="card_content_title">{title}</h3>
             <span className="card_content_description">{description}</span>
@@ -86,8 +97,7 @@ function Card({ title, description, img, url, inProgress, bestProject, info, tec
                 </button>
               </div>
             }
-
-
+            
           </div>
         </div>
 
