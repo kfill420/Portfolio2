@@ -9,6 +9,8 @@ interface CardInfoStateI {
   GithubSearcher: boolean;
   Todolist: boolean;
   ResidenceAlexandre: boolean;
+  CoreHunter: boolean;
+  DevEngineStudio: boolean;
 }
 
 export const initialState: CardInfoStateI = {
@@ -18,7 +20,9 @@ export const initialState: CardInfoStateI = {
   Spiecraft: false,
   GithubSearcher: false,
   Todolist: false,
-  ResidenceAlexandre: false
+  ResidenceAlexandre: false,
+  CoreHunter: false,
+  DevEngineStudio: false
 };
 
 export type ProjetKeys = keyof CardInfoStateI;

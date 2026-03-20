@@ -23,41 +23,59 @@ function Projects() {
       </Anim>
       <div className="projects_list">
         <Card
-          title="InoBank"
-          description="React Native Typescript Postgres SQL"
-          img="images/project6.webp"
-          info={true}
-          technos={["React", "Typescript", "Postgres SQL", "Node.js", "Redux", "Express", "Git", "Eslint", "Prettier"]}
+          title="CoreHunter"
+          description="Jeu Web Javascript WebSocket"
+          img="images/project9.webp"
+          url="https://corehunter.vercel.app"
+          bestProject={true}
+          info={false}
+          technos={["Javascript", "Phaser", "WebSocket", "Node.js"]}
         />
         <Card
           title="DTK"
-          description="React Typescript Postgres SQL"
+          description="React TypeScript PostgreSQL"
           img="images/project5.webp"
           url="https://dtk-shop.vercel.app/"
           bestProject={true}
           info={false}
-          technos={["React", "Typescript", "Postgres SQL", "Node.js", "Redux", "Express", "Git", "Eslint", "Prettier", "Scrum"]}
+          technos={["React", "TypeScript", "PostgreSQL", "Node.js", "Redux", "Express", "Git", "EsLint", "Prettier", "Scrum"]}
           // github="https://github.com/kfill420/DTK"
         />
         <Card
+          title="DevEngineStudio"
+          description="WordPress SEO Ubuntu Mariadb"
+          img="images/project8.webp"
+          url="https://devengine-studio.fr"
+          bestProject={false}
+          info={false}
+          technos={["WordPress", "SEO", "Mariadb", "Ubuntu"]}
+        />
+        <Card
+          title="InoBank"
+          description="React Native TypeScript PostgreSQL"
+          img="images/project6.webp"
+          info={true}
+          technos={["React", "TypeScript", "PostgreSQL", "Node.js", "Redux", "Express", "Git", "EsLint", "Prettier"]}
+        />
+        <Card
           title="Casalink"
-          description="React Typescript Postgres SQL"
+          description="React TypeScript PostgreSQL"
           img="images/project4.webp"
           url="https://casalinkk.vercel.app/"
           info={true}
-          technos={["React", "Typescript", "Postgres SQL", "Node.js", "Redux", "Express", "Git", "Eslint", "Prettier", "Scrum"]}
+          technos={["React", "TypeScript", "PostgreSQL", "Node.js", "Redux", "Express", "Git", "EsLint", "Prettier", "Scrum"]}
         />
         <Card
           title="Spiecraft"
-          description="Vue.Js postgres SQL"
+          description="Vue PostgreSQL"
           img="images/project1.webp"
           url="https://spiecraft.vercel.app"
           info={true}
-          technos={["Vue.js", "Typescript", "Postgres SQL", "Node.js", "Express", "Sequelize", "Bulma", "Git", "Eslint", "Prettier"]}
+          technos={["Vue", "TypeScript", "PostgreSQL", "Node.js", "Express", "Sequelize", "Bulma", "Git", "EsLint", "Prettier"]}
         />
         <Card
           title="ResidenceAlexandre"
-          description="React Typescript"
+          description="React TypeScript"
           img="images/project7.webp"
           url="https://residence-alexandre.vercel.app"
           info={false}
