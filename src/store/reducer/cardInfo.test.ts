@@ -10,7 +10,9 @@ describe('cardInfo reducer', () => {
       Spiecraft: false,
       GithubSearcher: false,
       Todolist: false,
-      ResidenceAlexandre: false
+      ResidenceAlexandre: false,
+      CoreHunter: false,
+      DevEngineStudio: false
     };
 
     const newState = reducer(initialState, actionSetCardInfoVisible({ projet: 'InoBank' }));
