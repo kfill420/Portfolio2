@@ -393,7 +393,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
       />
       <DepthOfField
         target={target}
-        focalLength={0.3}
+        focalLength={0.6}
         bokehScale={bokeh}
         height={700}
       />
