@@ -3,7 +3,6 @@ import * as THREE from 'three'
 import React, { useMemo, useRef, useState, useEffect, forwardRef } from 'react'
 import type { FC, ReactNode, Ref } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { HalfFloatType } from 'three'
 import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing';
 import { useGLTF, Merged, RenderTexture, PerspectiveCamera, Text, MeshReflectorMaterial, BakeShadows } from '@react-three/drei'
 import { SpinningBox } from './SpinningBox.tsx'
@@ -387,8 +386,6 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
   return (
     <EffectComposer enableNormalPass={false}>
       <Bloom
-        enabledNormalPass={false}
-        frameBufferType={HalfFloatType}
         luminanceThreshold={0}
         mipmapBlur
         luminanceSmoothing={0.0}
@@ -398,7 +395,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
         target={target}
         focalLength={0.3}
         bokehScale={bokeh}
-        height={700}
+        // height={700}
       />
     </EffectComposer>
   );
