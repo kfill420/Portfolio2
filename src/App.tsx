@@ -93,7 +93,16 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
 
             <Navigat activeScene={sceneIndex} setSceneIndex={setSceneIndex} setParameterIsOpen={setParameterIsOpen} handleVersionToggle={handleVersionToggle} />
 
-            <Canvas shadows dpr={[1, 1.5]}>
+            <Canvas 
+              shadows 
+              dpr={[1, 2]}
+              gl={{
+                antialias: false,
+                stencil: false,
+                depth: true,
+                powerPreference: "high-performance"
+              }}
+              >
               {!composerReady && <Loader />}
               <SceneManager
                 activeScene={sceneIndex}

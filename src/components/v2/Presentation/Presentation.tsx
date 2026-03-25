@@ -395,7 +395,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
         target={target}
         focalLength={0.3}
         bokehScale={bokeh}
-        // height={700}
+        height={700}
       />
     </EffectComposer>
   );
