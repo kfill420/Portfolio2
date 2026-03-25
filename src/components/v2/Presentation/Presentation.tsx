@@ -388,12 +388,12 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
       <Bloom
         luminanceThreshold={0}
         mipmapBlur
-        luminanceSmoothing={0.0}
+        luminanceSmoothing={.0}
         intensity={bloom}
       />
       <DepthOfField
         target={target}
-        focalLength={0.6}
+        focalLength={0.9}
         bokehScale={bokeh}
         height={700}
       />
