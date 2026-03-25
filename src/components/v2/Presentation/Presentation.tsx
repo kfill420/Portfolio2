@@ -374,10 +374,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
     return () => clearTimeout(timeout);
   }, [gl, size, onComposerReady]);
 
-  const target = useMemo(() => {
-    const clone = camera?.position?.clone?.();
-    return clone ? clone.add(new THREE.Vector3(0, 0, -5)) : new THREE.Vector3(0, 0, 13);
-  }, [camera]);
+  const fixedTarget = useMemo(() => new THREE.Vector3(0, 0, 0), []);
 
   if (!ready) return null;
 
@@ -392,7 +389,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
         intensity={bloom}
       />
       <DepthOfField
-        target={target}
+        target={fixedTarget}
         focalLength={0.3}
         bokehScale={bokeh}
         height={700}
