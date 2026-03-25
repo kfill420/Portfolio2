@@ -355,7 +355,7 @@ export function Leds({ instances }: LedsProps) {
 }
 
 export function SafePostEffects({ activeScene, onComposerReady }: { activeScene: number; onComposerReady?: () => void }) {
-  const { camera, gl, size } = useThree();
+  const { gl, size } = useThree();
   const [ready, setReady] = useState(false);
   const device = useDeviceType();
 
