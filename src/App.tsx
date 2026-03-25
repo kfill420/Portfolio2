@@ -64,7 +64,6 @@ function Home({ contactTarget, scrollToTarget }: { contactTarget: React.RefObjec
   const [parameterIsOpen, setParameterIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(project);
     if (project === "InoBank" && !isOpen) dispatch(actionSetCardInfoVisible({ projet: "InoBank" }))
   }, [project]);
 

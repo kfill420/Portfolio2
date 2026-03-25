@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import React, { useMemo, useRef, useState, useEffect, forwardRef } from 'react'
 import type { FC, ReactNode, Ref } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
+import { HalfFloatType } from 'three'
 import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing';
 import { useGLTF, Merged, RenderTexture, PerspectiveCamera, Text, MeshReflectorMaterial, BakeShadows } from '@react-three/drei'
 import { SpinningBox } from './SpinningBox.tsx'
@@ -355,7 +356,7 @@ export function Leds({ instances }: LedsProps) {
 }
 
 export function SafePostEffects({ activeScene, onComposerReady }: { activeScene: number; onComposerReady?: () => void }) {
-  const { gl, size } = useThree();
+  const { camera, gl, size } = useThree();
   const [ready, setReady] = useState(false);
   const device = useDeviceType();
 
@@ -374,7 +375,10 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
     return () => clearTimeout(timeout);
   }, [gl, size, onComposerReady]);
 
-  const fixedTarget = useMemo(() => new THREE.Vector3(0, 0, 0), []);
+  const target = useMemo(() => {
+    const clone = camera?.position?.clone?.();
+    return clone ? clone.add(new THREE.Vector3(0, 0, -5)) : new THREE.Vector3(0, 0, 13);
+  }, [camera]);
 
   if (!ready) return null;
 
@@ -383,13 +387,15 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
   return (
     <EffectComposer enableNormalPass={false}>
       <Bloom
+        enabledNormalPass={false}
+        frameBufferType={HalfFloatType}
         luminanceThreshold={0}
         mipmapBlur
         luminanceSmoothing={0.0}
         intensity={bloom}
       />
       <DepthOfField
-        target={fixedTarget}
+        target={target}
         focalLength={0.3}
         bokehScale={bokeh}
         height={700}
