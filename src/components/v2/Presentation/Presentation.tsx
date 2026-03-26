@@ -359,7 +359,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
   const [ready, setReady] = useState(false);
   const device = useDeviceType();
 
-  // const bloom = activeScene === 0 ? 1.5 : 0;
+  const bloom = activeScene === 0 ? 1.5 : 0;
   const bokeh = activeScene === 0 ? 10 : 0;
 
 
@@ -386,13 +386,14 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
   return (
     <EffectComposer enableNormalPass={false}>
       <Bloom
-        luminanceThreshold={1}
+        luminanceThreshold={0}
         mipmapBlur
-        luminanceSmoothing={1.0}
+        luminanceSmoothing={0.0}
+        intensity={bloom}
       />
       <DepthOfField
         target={target}
-        focalLength={0.3}
+        focalLength={0}
         bokehScale={bokeh}
         height={700}
       />
