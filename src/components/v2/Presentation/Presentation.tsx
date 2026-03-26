@@ -388,8 +388,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
       <Bloom
         luminanceThreshold={1}
         mipmapBlur
-        luminanceSmoothing={0.0}
-        intensity={bloom}
+        luminanceSmoothing={1.0}
       />
       <DepthOfField
         target={target}
