@@ -355,7 +355,7 @@ export function Leds({ instances }: LedsProps) {
 }
 
 export function SafePostEffects({ activeScene, onComposerReady }: { activeScene: number; onComposerReady?: () => void }) {
-  const { gl, size } = useThree();
+  const { camera, gl, size } = useThree();
   const [ready, setReady] = useState(false);
   const device = useDeviceType();
 
@@ -374,10 +374,10 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
     return () => clearTimeout(timeout);
   }, [gl, size, onComposerReady]);
 
-  // const target = useMemo(() => {
-  //   const clone = camera?.position?.clone?.();
-  //   return clone ? clone.add(new THREE.Vector3(0, 0, -5)) : new THREE.Vector3(0, 0, 13);
-  // }, [camera]);
+  const target = useMemo(() => {
+    const clone = camera?.position?.clone?.();
+    return clone ? clone.add(new THREE.Vector3(0, 0, -5)) : new THREE.Vector3(0, 0, 13);
+  }, [camera]);
 
   if (!ready) return null;
 
@@ -386,13 +386,13 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
   return (
     <EffectComposer enableNormalPass={false}>
       <Bloom
-        luminanceThreshold={0}
+        luminanceThreshold={1}
         mipmapBlur
         luminanceSmoothing={0.0}
         intensity={bloom}
       />
       <DepthOfField
-        target={[0,0,0]}
+        target={target}
         focalLength={0.3}
         bokehScale={bokeh}
         height={700}
