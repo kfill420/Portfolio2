@@ -359,7 +359,7 @@ export function SafePostEffects({ activeScene, onComposerReady }: { activeScene:
   const [ready, setReady] = useState(false);
   const device = useDeviceType();
 
-  const bloom = activeScene === 0 ? 1.5 : 0;
+  // const bloom = activeScene === 0 ? 1.5 : 0;
   const bokeh = activeScene === 0 ? 10 : 0;
 
 
